@@ -1,34 +1,26 @@
-import React, { useState } from 'react';
+import React, { useState, useRef } from 'react';
 import styled from 'styled-components';
-import { IFormValues } from '../types';
+import { cpfMask } from '../helpers';
+import { IFormValues, IFormSignUp } from '../types';
 import { lightTheme, PALETTES } from '../theme';
+import { Formik, Form } from 'formik';
 import {
-  Formik,
-  FormikHelpers,
-  FormikProps,
-  Form,
-  Field,
-  FieldProps,
-} from 'formik';
-import {
+  useDisclosure,
   FormControl,
   FormLabel,
   Input,
-  FormErrorMessage,
   Button,
   Checkbox,
-  Box,
-  Image,
-  Badge,
-  Link,
-  AlertDialog,
-  AlertDialogBody,
-  AlertDialogFooter,
-  AlertDialogHeader,
-  AlertDialogContent,
-  AlertDialogOverlay,
+  Drawer,
+  DrawerBody,
+  DrawerFooter,
+  DrawerHeader,
+  DrawerOverlay,
+  DrawerContent,
+  DrawerCloseButton,
 } from '@chakra-ui/react';
 import { ArrowForwardIcon } from '@chakra-ui/icons';
+
 const Container = styled.div`
   background-color: ${PALETTES.dark};
   position: fixed;
@@ -39,6 +31,11 @@ const Container = styled.div`
   overflow: auto;
   justify-content: center;
   display: flex;
+
+  @media (max-width: 768px) {
+    justify-content: center;
+    align-items: center;
+  }
 `;
 
 const Logo = styled.img`
@@ -55,6 +52,11 @@ const Wrapper = styled.div`
   flex-direction: row;
   flex: auto;
   display: flex;
+
+  @media (max-width: 768px) {
+    justify-content: center;
+    flex-direction: column;
+  }
 `;
 
 const ImageSide = styled.div`
@@ -64,7 +66,12 @@ const ImageSide = styled.div`
   background-size: cover;
   width: 50%;
   flex: content;
+  padding: 15px;
   display: flex;
+
+  @media (max-width: 768px) {
+    display: none;
+  }
 `;
 
 const FormSide = styled.div`
@@ -74,6 +81,12 @@ const FormSide = styled.div`
   display: flex;
   padding: 100px;
   flex-direction: column;
+
+  @media (max-width: 768px) {
+    position: absolute;
+    align-self: center;
+    flex: 1;
+  }
 `;
 
 const BrandTitle = styled.h1`
@@ -96,6 +109,19 @@ const Paragraph = styled.p`
 
 const FormLogin: React.FC<{}> = () => {
   const [isLoading, setIsLoading] = useState(false);
+  const { isOpen, onOpen, onClose } = useDisclosure();
+  const btnRef = useRef();
+
+  const initialSignUpValues: IFormSignUp = {
+    fullName: '',
+    email: '',
+    password: '',
+    passwordRepeat: '',
+    occupation: '',
+    cpf: '',
+    birthDate: null,
+  };
+
   const initialValues: IFormValues = {
     email: '',
     password: '',
@@ -103,75 +129,195 @@ const FormLogin: React.FC<{}> = () => {
   };
 
   return (
-    <Formik
-      initialValues={initialValues}
-      onSubmit={(values, actions) => {
-        console.log({ values, actions });
-        alert(JSON.stringify(values, null, 2));
-        actions.setSubmitting(false);
-      }}>
-      {(props) => (
-        <Form>
-          <FormControl id='email' isRequired>
-            <FormLabel marginBottom={4} htmlFor='email'>
-              E-mail
-            </FormLabel>
-            <Input
-              variant='flushed'
-              type='email'
-              placeholder='Ex: johndoe@email.com'
-            />
-          </FormControl>
-          <FormControl id='password' isRequired>
-            <FormLabel marginTop={11} marginBottom={4} htmlFor='password'>
-              Senha
-            </FormLabel>
-            <Input
-              variant='flushed'
-              type='password'
-              placeholder='Mínimo 8 caracteres.'
-              required
-            />
-          </FormControl>
+    <>
+      <Drawer isOpen={isOpen} placement='right' onClose={onClose}>
+        <DrawerOverlay>
+          <DrawerContent>
+            <DrawerCloseButton />
+            <DrawerHeader>Criar uma nova conta</DrawerHeader>
 
-          <FormControl justifyContent='space-between'>
-            <Checkbox marginBlock={15.5} color={PALETTES.dark} defaultChecked>
-              Lembrar-me
-            </Checkbox>
-          </FormControl>
-          <div
-            style={{
-              flex: 1,
-              marginBlock: 30,
-              display: 'flex',
-              justifyContent: 'space-between',
-            }}>
-            <Button borderWidth={1} variant='outline'>
-              Criar uma conta
-            </Button>
-            <Button
-              onClick={() => setIsLoading(!isLoading)}
-              isLoading={isLoading}
-              leftIcon={<ArrowForwardIcon />}
-              // borderRadius={30}
-              borderWidth={1}
-              backgroundColor={PALETTES.dark}
-              color={PALETTES.light}
-              variant='solid'>
-              Acessar plataforma
-            </Button>
-          </div>
-        </Form>
-      )}
-    </Formik>
+            <DrawerBody>
+              <Formik
+                initialValues={initialSignUpValues}
+                onSubmit={(values, actions) => {
+                  console.log({ values, actions });
+                  alert(JSON.stringify(values, null, 2));
+                  actions.setSubmitting(false);
+                }}>
+                {(props) => (
+                  <Form>
+                    <FormControl marginBlock={5} id='fullName' isRequired>
+                      <FormLabel marginBottom={4} htmlFor='name'>
+                        Nome completo
+                      </FormLabel>
+                      <Input
+                        onChange={props.handleChange('fullName')}
+                        id='fullName'
+                        variant='flushed'
+                        type='text'
+                        placeholder='Ex: John Doe'
+                      />
+                    </FormControl>
+                    <FormControl marginBlock={5} id='birthDate' isRequired>
+                      <FormLabel marginBottom={4} htmlFor='text'>
+                        Data de Nascimento
+                      </FormLabel>
+                      <Input
+                        onChange={props.handleChange('birthDate')}
+                        id='birthDate'
+                        variant='flushed'
+                        type='date'
+                      />
+                    </FormControl>
+                    <FormControl marginBlock={5} id='email' isRequired>
+                      <FormLabel marginBottom={4} htmlFor='email'>
+                        E-mail
+                      </FormLabel>
+                      <Input
+                        onChange={props.handleChange('email')}
+                        id='email'
+                        variant='flushed'
+                        type='text'
+                        placeholder='Ex: johndoe@email.com'
+                      />
+                    </FormControl>
+                    <FormControl marginBlock={5} id='password' isRequired>
+                      <FormLabel marginBottom={4} htmlFor='password'>
+                        Senha
+                      </FormLabel>
+                      <Input
+                        onChange={props.handleChange('password')}
+                        id='password'
+                        variant='flushed'
+                        type='password'
+                        placeholder='Mínimo 8 caracteres'
+                      />
+                    </FormControl>
+                    <FormControl marginBlock={5} id='passwordRepeat' isRequired>
+                      <FormLabel marginBottom={4} htmlFor='password'>
+                        Senha novamente
+                      </FormLabel>
+                      <Input
+                        onChange={props.handleChange('passwordRepeat')}
+                        id='passwordRepeat'
+                        variant='flushed'
+                        type='password'
+                        placeholder='Mínimo 8 caracteres'
+                      />
+                    </FormControl>
+                    <FormControl marginBlock={5} id='occupation' isRequired>
+                      <FormLabel marginBottom={4} htmlFor='text'>
+                        Ocupação
+                      </FormLabel>
+                      <Input
+                        onChange={props.handleChange('occupation')}
+                        id='occupation'
+                        variant='flushed'
+                        type='text'
+                        placeholder='Ex: Desenvolvedor de Software'
+                      />
+                    </FormControl>
+                    <FormControl marginBlock={5} id='cpf' isRequired>
+                      <FormLabel marginBottom={4} htmlFor='text'>
+                        CPF
+                      </FormLabel>
+                      <Input
+                        maxLength={14}
+                        onChange={(cpf) =>
+                          props.setFieldValue('cpf', cpfMask(cpf.target.value))
+                        }
+                        id='cpf'
+                        value={props.values.cpf}
+                        variant='flushed'
+                        type='number'
+                        placeholder='Somente números'
+                      />
+                    </FormControl>
+                  </Form>
+                )}
+              </Formik>
+            </DrawerBody>
+
+            <DrawerFooter>
+              <Button variant='outline' mr={3} onClick={onClose}>
+                Cancelar
+              </Button>
+              <Button colorScheme='blue'>Criar conta</Button>
+            </DrawerFooter>
+          </DrawerContent>
+        </DrawerOverlay>
+      </Drawer>
+      <Formik
+        initialValues={initialValues}
+        onSubmit={(values, actions) => {
+          console.log({ values, actions });
+          alert(JSON.stringify(values, null, 2));
+          actions.setSubmitting(false);
+        }}>
+        {(props) => (
+          <Form>
+            <FormControl id='email' isRequired>
+              <FormLabel marginBottom={4} htmlFor='email'>
+                E-mail
+              </FormLabel>
+              <Input
+                variant='flushed'
+                type='email'
+                placeholder='Ex: johndoe@email.com'
+              />
+            </FormControl>
+            <FormControl id='password' isRequired>
+              <FormLabel marginTop={11} marginBottom={4} htmlFor='password'>
+                Senha
+              </FormLabel>
+              <Input
+                variant='flushed'
+                type='password'
+                placeholder='Mínimo 8 caracteres.'
+                required
+              />
+            </FormControl>
+
+            <FormControl justifyContent='space-between'>
+              <Checkbox marginBlock={15.5} color={PALETTES.dark} defaultChecked>
+                Lembrar-me
+              </Checkbox>
+            </FormControl>
+            <div
+              style={{
+                flex: 1,
+                marginBlock: 30,
+                display: 'flex',
+                justifyContent: 'space-between',
+              }}>
+              <Button onClick={onOpen} borderWidth={1} variant='outline'>
+                Criar uma conta
+              </Button>
+              <Button
+                onClick={() => setIsLoading(!isLoading)}
+                isLoading={isLoading}
+                leftIcon={<ArrowForwardIcon />}
+                borderWidth={1}
+                backgroundColor={PALETTES.dark}
+                color={PALETTES.light}
+                variant='solid'>
+                Acessar plataforma
+              </Button>
+            </div>
+          </Form>
+        )}
+      </Formik>
+    </>
   );
 };
-// --
+
 const Login: React.FC = () => {
   return (
     <Container>
       <Wrapper>
-        <ImageSide>{/* <BrandTitle>Job Finder</BrandTitle> */}</ImageSide>
+        <ImageSide>
+          <BrandTitle>Job Finder</BrandTitle>
+        </ImageSide>
         <FormSide>
           <Logo src='logo192.png' />
           <Title>Entre com sua conta</Title>

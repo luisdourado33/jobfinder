@@ -7,11 +7,13 @@ import {
 } from 'react-router-dom';
 
 import Login from './screens/Login';
+import Dashboard from './screens/dashboard';
 
 const divTemp = {
   backgroundColor: 'orange',
   padding: '30px',
 };
+
 const Home: React.FC = () => {
   return (
     <div style={divTemp}>
@@ -35,11 +37,13 @@ const Home: React.FC = () => {
     </div>
   );
 };
+
 const AppRouter: React.FC = () => {
   return (
     <Router>
       <Route path='/' exact component={Home} />
       <Route path='/login' component={Login} />
+      <Route path='/dashboard' component={Dashboard} />
     </Router>
   );
 };
