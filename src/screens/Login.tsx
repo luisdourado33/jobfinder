@@ -1,9 +1,10 @@
 import React, { useState, useRef } from 'react';
 import styled from 'styled-components';
 import { cpfMask } from '../helpers';
-import { IFormValues, IFormSignUp } from '../types';
 import { lightTheme, PALETTES } from '../theme';
 import { Formik, Form } from 'formik';
+import { ArrowForwardIcon } from '@chakra-ui/icons';
+import { IFormValues, IFormSignUp } from '../types';
 import {
   useDisclosure,
   FormControl,
@@ -19,7 +20,6 @@ import {
   DrawerContent,
   DrawerCloseButton,
 } from '@chakra-ui/react';
-import { ArrowForwardIcon } from '@chakra-ui/icons';
 
 const Container = styled.div`
   background-color: ${PALETTES.dark};
@@ -91,7 +91,8 @@ const FormSide = styled.div`
 
 const BrandTitle = styled.h1`
   color: ${PALETTES.light};
-  font-weight: bold;
+  font-weight: lighter;
+  align-self: flex-end;
 `;
 
 const Title = styled.h1`
@@ -127,6 +128,10 @@ const FormLogin: React.FC<{}> = () => {
     password: '',
     rememberCredentials: false,
   };
+
+  function handleSignUp(formFields: IFormSignUp) {
+    console.log(JSON.stringify(formFields));
+  }
 
   return (
     <>
@@ -229,21 +234,22 @@ const FormLogin: React.FC<{}> = () => {
                         id='cpf'
                         value={props.values.cpf}
                         variant='flushed'
-                        type='number'
                         placeholder='Somente números'
                       />
                     </FormControl>
+
+                    <DrawerFooter>
+                      <Button variant='outline' mr={3} onClick={onClose}>
+                        Cancelar
+                      </Button>
+                      <Button type='submit' colorScheme='blue'>
+                        Criar conta
+                      </Button>
+                    </DrawerFooter>
                   </Form>
                 )}
               </Formik>
             </DrawerBody>
-
-            <DrawerFooter>
-              <Button variant='outline' mr={3} onClick={onClose}>
-                Cancelar
-              </Button>
-              <Button colorScheme='blue'>Criar conta</Button>
-            </DrawerFooter>
           </DrawerContent>
         </DrawerOverlay>
       </Drawer>
@@ -316,7 +322,9 @@ const Login: React.FC = () => {
     <Container>
       <Wrapper>
         <ImageSide>
-          <BrandTitle>Job Finder</BrandTitle>
+          <BrandTitle>
+            Job Finder - Todos os direitos reservados - 2021
+          </BrandTitle>
         </ImageSide>
         <FormSide>
           <Logo src='logo192.png' />
