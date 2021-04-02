@@ -1,7 +1,7 @@
-import React, { useState, useRef } from 'react';
+import React, { useState, useRef, ReactElement } from 'react';
 import styled from 'styled-components';
 import { cpfMask } from '../helpers';
-import { lightTheme, PALETTES } from '../theme';
+import { PALETTES } from '../theme';
 import { Formik, Form } from 'formik';
 import { ArrowForwardIcon } from '@chakra-ui/icons';
 import { IFormValues, IFormSignUp } from '../types';
@@ -111,7 +111,6 @@ const Paragraph = styled.p`
 const FormLogin: React.FC<{}> = () => {
   const [isLoading, setIsLoading] = useState(false);
   const { isOpen, onOpen, onClose } = useDisclosure();
-  const btnRef = useRef();
 
   const initialSignUpValues: IFormSignUp = {
     fullName: '',
@@ -135,7 +134,7 @@ const FormLogin: React.FC<{}> = () => {
 
   return (
     <>
-      <Drawer isOpen={isOpen} placement='right' onClose={onClose}>
+      <Drawer id='cadastro' isOpen={isOpen} placement='right' onClose={onClose}>
         <DrawerOverlay>
           <DrawerContent>
             <DrawerCloseButton />
@@ -145,8 +144,7 @@ const FormLogin: React.FC<{}> = () => {
               <Formik
                 initialValues={initialSignUpValues}
                 onSubmit={(values, actions) => {
-                  console.log({ values, actions });
-                  alert(JSON.stringify(values, null, 2));
+                  handleSignUp(values);
                   actions.setSubmitting(false);
                 }}>
                 {(props) => (

@@ -1,16 +1,12 @@
 import React from 'react';
-import {
-  BrowserRouter as Router,
-  Route,
-  RouteComponentProps,
-  Link,
-} from 'react-router-dom';
-
+import { BrowserRouter as Router, Route, Link } from 'react-router-dom';
+import { PALETTES } from './theme';
 import Login from './screens/Login';
 import Dashboard from './screens/dashboard';
 
 const divTemp = {
-  backgroundColor: 'orange',
+  backgroundColor: PALETTES.dark,
+  color: '#FFF',
   padding: '30px',
 };
 
@@ -22,16 +18,24 @@ const Home: React.FC = () => {
       </h1>
       <ul>
         <li>
-          <Link to='/login'>Página de Login (87%)</Link>
+          <Link to='/login'>
+            Página de Login <b>(100%)</b>
+          </Link>
         </li>
         <li>
-          <Link to='/cadastro'>Página de cadastro (0%)</Link>
+          <Link to='/login'>
+            Drawer de Cadastro <b>(100%)</b>
+          </Link>
         </li>
         <li>
-          <Link to='/dashboard'>Página de dashboard (0%)</Link>
+          <Link to='/dashboard'>
+            Página de dashboard <b>(0%)</b>
+          </Link>
         </li>
         <li>
-          <Link to='/vagas'>Página de vagas (0%)</Link>
+          <Link to='/vagas'>
+            Página de vagas <b>(0%)</b>
+          </Link>
         </li>
       </ul>
     </div>

@@ -11,10 +11,23 @@ export const Container = styled.div`
   right: 0;
   overflow: auto;
   display: flex;
+  flex: 1;
 `;
 
 export const Navbar = styled.nav`
-  background-color: ${PALETTES.semiDark};
+  background-color: ${PALETTES.dark};
   flex-direction: column;
-  display: inline-flex;
+  display: inline;
+
+  ul {
+    flex-direction: row;
+    flex: 1;
+    display: inline;
+  }
+
+  li {
+    color: #fff;
+    padding: 5px;
+    font-weight: bold;
+  }
 `;
