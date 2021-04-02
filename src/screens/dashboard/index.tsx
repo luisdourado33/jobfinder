@@ -1,13 +1,14 @@
 import React, { useEffect, useState } from 'react';
 import 'rsuite/dist/styles/rsuite-default.css';
+import { PALETTES } from '../../theme';
+import { SearchIcon } from '@chakra-ui/icons';
 import { Jumbotron, JumbotronSeparator } from './styles';
 import { Container, Header, Content, Footer } from 'rsuite';
-import { PALETTES } from '../../theme';
 import { Input, InputGroup, InputLeftElement, Button } from '@chakra-ui/react';
-import { SearchIcon } from '@chakra-ui/icons';
 
 import Navbar from '../../components/dashboard/Navbar';
 import Section from '../../components/Section';
+import GridCard from '../../components/dashboard/GridCard';
 
 const Dashboard: React.FC = () => {
   useEffect(() => {
@@ -63,18 +64,12 @@ const Dashboard: React.FC = () => {
             theme='light'
             title='Empregos relacionados ao seu perfil'
             subtitle='+300 empregos adicionados hoje.'>
-            <h1>Item da seção</h1>
-          </Section>
-          <Section
-            theme='dark'
-            title='Grandes empresas estão conosco!'
-            subtitle='Empresas parceiras'>
-            <h1>Item da seção</h1>
+            <GridCard cardData='Hello' />
           </Section>
         </Content>
-        <Footer>
+        {/* <Footer>
           <h3>Job Finder - Todos os direitos reservados</h3>
-        </Footer>
+        </Footer> */}
       </Container>
     </div>
   );
