@@ -1,4 +1,4 @@
-import React, { useState, useRef, ReactElement } from 'react';
+import React, { useState } from 'react';
 import styled from 'styled-components';
 import { cpfMask } from '../helpers';
 import { PALETTES } from '../theme';
