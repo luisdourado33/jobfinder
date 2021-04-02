@@ -1,5 +1,7 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
+import SVG, { Props as SVGProps } from 'react-inlinesvg'; // Aprender a usar corretamente
 import styled from 'styled-components';
+import swal from 'sweetalert';
 import { cpfMask } from '../helpers';
 import { PALETTES } from '../theme';
 import { Formik, Form } from 'formik';
@@ -21,8 +23,14 @@ import {
   DrawerCloseButton,
 } from '@chakra-ui/react';
 
+const BrandVector = React.forwardRef<SVGElement, SVGProps>((props, ref) => (
+  <SVG innerRef={ref} title='Work Together' {...props} />
+));
+
 const Container = styled.div`
-  background-color: ${PALETTES.dark};
+  /* background-color: ${PALETTES.dark}; */
+  background-color: #ffffff;
+  background-image: url('https://www.transparenttextures.com/patterns/connected.png');
   position: fixed;
   top: 0;
   left: 0;
@@ -39,8 +47,7 @@ const Container = styled.div`
 `;
 
 const Logo = styled.img`
-  width: 70px;
-  height: 70px;
+  width: 250px;
   margin-bottom: 51.2px;
 `;
 
@@ -60,14 +67,18 @@ const Wrapper = styled.div`
 `;
 
 const ImageSide = styled.div`
-  background-color: transparent;
-  background-image: url('images/bg.jpg');
+  background-color: ${PALETTES.dark};
+  /* background-image: url('images/bg.jpg'); */
+  /* background-image: url('https://www.transparenttextures.com/patterns/blizzard.png'); */
   background-position: center;
   background-size: cover;
   width: 50%;
   flex: content;
-  padding: 15px;
+  flex-direction: row;
+  padding: 30px;
   display: flex;
+  align-items: center;
+  justify-content: center;
 
   @media (max-width: 768px) {
     display: none;
@@ -90,9 +101,9 @@ const FormSide = styled.div`
 `;
 
 const BrandTitle = styled.h1`
-  color: ${PALETTES.light};
-  font-weight: lighter;
-  align-self: flex-end;
+  color: ${PALETTES.dark};
+  font-weight: bold;
+  align-self: flex-start;
 `;
 
 const Title = styled.h1`
@@ -111,6 +122,7 @@ const Paragraph = styled.p`
 const FormLogin: React.FC<{}> = () => {
   const [isLoading, setIsLoading] = useState(false);
   const { isOpen, onOpen, onClose } = useDisclosure();
+  const currentlyTime = new Date(Date.now());
 
   const initialSignUpValues: IFormSignUp = {
     fullName: '',
@@ -130,7 +142,16 @@ const FormLogin: React.FC<{}> = () => {
 
   function handleSignUp(formFields: IFormSignUp) {
     console.log(JSON.stringify(formFields));
+    swal(
+      'Conta criada com sucesso!',
+      `Seja bem-vindo(a), ${formFields.fullName}!`,
+      'success'
+    );
   }
+
+  useEffect(() => {
+    window.document.title = 'Acessar a plataforma | Job Finder';
+  }, []);
 
   return (
     <>
@@ -320,12 +341,11 @@ const Login: React.FC = () => {
     <Container>
       <Wrapper>
         <ImageSide>
-          <BrandTitle>
-            Job Finder - Todos os direitos reservados - 2021
-          </BrandTitle>
+          {/* <BrandTitle>Job Finder</BrandTitle> */}
+          <img src='assets/images/vectors/work-cards.png' />
         </ImageSide>
         <FormSide>
-          <Logo src='logo192.png' />
+          <Logo src='assets/images/brand/logo.png' />
           <Title>Entre com sua conta</Title>
           <Paragraph>
             Tenha acesso a grandes oportunidades de emprego por todo o país!
