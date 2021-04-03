@@ -43,6 +43,7 @@ const Section: React.FC<IProps> = (props) => {
   `;
 
   const Title = styled.h1`
+    color: ${props.theme ? getTheme(props.theme).color : '#eee'};
     font-weight: bolder;
     font-size: 30px;
     line-height: 30px;
@@ -50,6 +51,7 @@ const Section: React.FC<IProps> = (props) => {
   `;
 
   const Subtitle = styled.h1`
+    color: ${props.theme ? getTheme(props.theme).color : '#eee'};
     font-weight: normal;
   `;
 

@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect } from 'react';
 import 'rsuite/dist/styles/rsuite-default.css';
 import { PALETTES } from '../../theme';
 import { SearchIcon } from '@chakra-ui/icons';

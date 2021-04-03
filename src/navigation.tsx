@@ -1,8 +1,14 @@
 import React from 'react';
 import { BrowserRouter as Router, Route, Link } from 'react-router-dom';
 import { PALETTES } from './theme';
+
 import Login from './screens/Login';
 import Dashboard from './screens/dashboard';
+
+/**
+ * Job Routes
+ */
+import Overview from './screens/jobs/Overview';
 
 const divTemp = {
   backgroundColor: PALETTES.dark,
@@ -48,6 +54,7 @@ const AppRouter: React.FC = () => {
       <Route path='/' exact component={Home} />
       <Route path='/login' component={Login} />
       <Route path='/dashboard' component={Dashboard} />
+      <Route path='/jobs/overview/:jobId' component={Overview} />
     </Router>
   );
 };

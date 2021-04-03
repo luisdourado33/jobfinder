@@ -5,6 +5,7 @@ import swal from 'sweetalert';
 import { cpfMask } from '../helpers';
 import { PALETTES } from '../theme';
 import { Formik, Form } from 'formik';
+import { Redirect } from 'react-router-dom';
 import { ArrowForwardIcon } from '@chakra-ui/icons';
 import { IFormValues, IFormSignUp } from '../types';
 import {
@@ -139,6 +140,14 @@ const FormLogin: React.FC<{}> = () => {
     password: '',
     rememberCredentials: false,
   };
+
+  function handleSignIn() {
+    setIsLoading(true);
+    setTimeout(() => {
+      setIsLoading(false);
+      window.location.href = '/dashboard';
+    }, 2000);
+  }
 
   function handleSignUp(formFields: IFormSignUp) {
     console.log(JSON.stringify(formFields));
@@ -319,7 +328,7 @@ const FormLogin: React.FC<{}> = () => {
                 Criar uma conta
               </Button>
               <Button
-                onClick={() => setIsLoading(!isLoading)}
+                onClick={() => handleSignIn()}
                 isLoading={isLoading}
                 leftIcon={<ArrowForwardIcon />}
                 borderWidth={1}

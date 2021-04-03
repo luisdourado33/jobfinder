@@ -17,7 +17,7 @@ interface IProps {
 const Card = styled.div`
   border-radius: 5px;
   padding: 15px;
-  border-color: #d1d1d1;
+  border-color: transparent;
   border-width: 1px;
   background-color: #fff;
   transition: background-color 0.5s;
@@ -25,6 +25,7 @@ const Card = styled.div`
   align-content: flex-start;
   justify-content: flex-start;
   flex-direction: column;
+  box-shadow: 5px 5px 5px ${PALETTES.dark};
   flex: 1;
   display: flex;
 
@@ -80,7 +81,7 @@ const CardFooter = styled.div`
 
 const JobCard: React.FC<IProps> = (props) => {
   return (
-    <Card>
+    <Card onClick={() => alert(JSON.stringify(props))}>
       <CardHeader>
         <Flex>
           <Avatar bg={PALETTES.dark} />
@@ -91,7 +92,9 @@ const JobCard: React.FC<IProps> = (props) => {
                 Novo
               </Badge>
             </Text>
-            <Text fontSize='sm'>Cadastrada em: {props.createdAt}</Text>
+            <Text fontSize='sm'>
+              <b>Cadastrada em:</b> {props.createdAt}
+            </Text>
           </Box>
         </Flex>
       </CardHeader>
