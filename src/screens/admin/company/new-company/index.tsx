@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { Container, Header, Sidenav, Sidebar, Content, Footer } from 'rsuite';
 import { PALETTES, headerStyles } from '../../../../theme';
-import { Role } from '../../../../types';
+import { Company } from '../../../../types';
 import {
   FormControl,
   FormLabel,
@@ -18,8 +18,6 @@ import {
   Th,
   Tbody,
   Td,
-  Alert,
-  AlertIcon,
 } from '@chakra-ui/react';
 import { CloseIcon } from '@chakra-ui/icons';
 import { Formik, Form } from 'formik';
@@ -33,32 +31,32 @@ interface IFormValues {
   status: boolean;
 }
 
-const NewRole: React.FC = () => {
-  const [roles, setRoles] = useState<Role[]>();
+const NewCompany: React.FC = () => {
+  const [companies, setCompanies] = useState<Company[]>();
   const [now, setNow] = useState<any>();
   const [isAuth, setIsAuth] = useState<boolean>(false);
 
-  async function getRoles() {
+  async function getCompanies() {
     await api
-      .get('/roles')
+      .get('/companies')
       .then((response) => {
-        setRoles(response.data);
+        setCompanies(response.data);
       })
       .catch((err) => {
         alert('Dados inválidos!');
       });
   }
 
-  async function createRole(role: any) {
+  async function createCompanyType(type: any) {
     await api
-      .post('/roles', {
-        name: role.name,
-        status: role.status,
+      .post('/companies', {
+        name: type.name,
+        status: type.status,
       })
       .then((success) => {
         swal({
-          title: 'Profissão adicionada!',
-          text: `Profissão ${success.data.name} adicionada com sucesso.`,
+          title: 'Tipo de empresa adicionado!',
+          text: `Tipo ${success.data.name} adicionada(o) com sucesso.`,
           icon: 'success',
         });
       })
@@ -71,16 +69,16 @@ const NewRole: React.FC = () => {
       });
   }
 
-  function removeRole(roleId: number) {
+  function removeCompany(companyId: number) {
     swal({
-      title: 'Confirmar remoção de profissão',
+      title: 'Confirmar remoção de tipo',
       text: 'A ação não pode ser revertida. Apagar mesmo assim?',
       icon: 'warning',
       buttons: true,
       dangerMode: true,
     }).then(async (willDelete) => {
       if (willDelete) {
-        await api.delete(`/roles/${roleId}`).then((success) => {
+        await api.delete(`/companies/${companyId}`).then((success) => {
           swal(success.data.msg, {
             icon: 'success',
           });
@@ -92,8 +90,8 @@ const NewRole: React.FC = () => {
   }
 
   useEffect(() => {
-    window.document.title = 'Nova profissão | Job Finder';
-    getRoles();
+    window.document.title = 'Novo tipo de empresa | Job Finder';
+    getCompanies();
   }, []);
 
   const initialValues: IFormValues = {
@@ -117,33 +115,28 @@ const NewRole: React.FC = () => {
         <Container>
           <Header style={{ padding: 20 }}>
             <Heading size={'lg'} isTruncated>
-              Adicionar nova profissão
+              Adicionar novo tipo de empresa
             </Heading>
           </Header>
-          <Alert status='info'>
-            <AlertIcon />
-            Profissões com status ativo poderão ser selecionadas ao cadastrar um
-            novo usuário.
-          </Alert>
           <Content style={{ padding: 20 }}>
             <div>
               <Formik
                 initialValues={initialValues}
                 onSubmit={(values, actions) => {
-                  createRole(values);
+                  createCompanyType(values);
                 }}>
                 {(props) => (
                   <Form style={{ marginBottom: 50 }}>
                     <FormControl marginBlock={5} id='name' isRequired>
                       <FormLabel marginBottom={4} htmlFor='text'>
-                        Nome da profissão
+                        Tipo de empresa
                       </FormLabel>
                       <Input
                         onChange={props.handleChange('name')}
                         id='name'
                         variant='filled'
                         type='text'
-                        placeholder='Ex: Engenheiro Civil'
+                        placeholder='Ex: Construção Civil'
                       />
                     </FormControl>
                     <FormControl marginBlock={5} id='status' isRequired>
@@ -171,35 +164,35 @@ const NewRole: React.FC = () => {
                     </FormControl>
                     <FormControl>
                       <Button type='submit' colorScheme='blue'>
-                        Adicionar profissão
+                        Adicionar tipo de empresa
                       </Button>
                     </FormControl>
                   </Form>
                 )}
               </Formik>
               <Badge colorScheme='teal'>
-                Profissões cadastradas: {roles?.length}
+                Tipos cadastrados: {companies?.length}
               </Badge>
               <Table variant='simple' colorScheme='facebook'>
                 {/* <TableCaption>Atualizado em:</TableCaption> */}
                 <Thead>
                   <Tr>
                     <Th>ID</Th>
-                    <Th>Profissão</Th>
+                    <Th>Categoria de empresa</Th>
                     <Th>Status</Th>
                     <Th>Ações</Th>
                   </Tr>
                 </Thead>
                 <Tbody>
-                  {roles &&
-                    roles.map((role: Role, key) => (
+                  {companies &&
+                    companies.map((company: Company, key) => (
                       <Tr key={key}>
-                        <Td>{role.id}</Td>
+                        <Td>{company.id}</Td>
                         <Td>
-                          <b>{role.name}</b>
+                          <b>{company.name}</b>
                         </Td>
                         <Td>
-                          {role.status ? (
+                          {company.status ? (
                             <Badge colorScheme='green'>Ativo</Badge>
                           ) : (
                             <Badge colorScheme='red'>Inativo</Badge>
@@ -207,7 +200,7 @@ const NewRole: React.FC = () => {
                         </Td>
                         <Td>
                           <IconButton
-                            onClick={() => removeRole(role.id)}
+                            onClick={() => removeCompany(company.id)}
                             variant='outline'
                             colorScheme='red'
                             alt='Excluir profissão'
@@ -230,4 +223,4 @@ const NewRole: React.FC = () => {
   );
 };
 
-export default NewRole;
+export default NewCompany;

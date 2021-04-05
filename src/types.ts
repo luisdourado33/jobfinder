@@ -21,3 +21,11 @@ export type Role = {
   created_at: Date;
   updated_at: Date;
 }
+
+export type Company = {
+  id: number;
+  name: string;
+  status: boolean;
+  created_at: Date;
+  updated_at: Date;
+}

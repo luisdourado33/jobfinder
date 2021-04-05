@@ -22,3 +22,10 @@ export const PALETTES = {
   semiDark: '#98ded9',
   dark: '#161d6f',
 };
+
+export const headerStyles = {
+  padding: 20,
+  fontSize: 16,
+  background: PALETTES.dark,
+  color: ' #fff',
+};

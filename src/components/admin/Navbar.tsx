@@ -19,20 +19,26 @@ const Navbar: React.FC = () => {
         <Sidenav.Body>
           <Nav>
             <Nav.Item eventKey='1' icon={<Icon icon='dashboard' />}>
-              Dashboard
+              <Link to='/dashboard'>Dashboard</Link>
             </Nav.Item>
             {/* <Nav.Item eventKey='2' icon={<Icon icon='group' />}>
               User Group
             </Nav.Item> */}
             <Dropdown
-              eventKey='3'
+              eventKey='2'
               title='Profissões'
               icon={<Icon icon='magic' />}>
               <Dropdown.Item eventKey='2-1'>
-                <Link to='/admin/new-role'>Adicionar nova profissão</Link>
+                <Link to='/admin/new-role'>Gerenciar profissões</Link>
               </Dropdown.Item>
-              <Dropdown.Item eventKey='2-2'>Lista de profissões</Dropdown.Item>
-              <Dropdown.Item eventKey='2-3'>Editar profissão</Dropdown.Item>
+            </Dropdown>
+            <Dropdown
+              eventKey='3'
+              title='Categorias de Empresas'
+              icon={<Icon icon='magic' />}>
+              <Dropdown.Item eventKey='3-1'>
+                <Link to='/admin/new-company'>Gerenciar categorias</Link>
+              </Dropdown.Item>
             </Dropdown>
           </Nav>
         </Sidenav.Body>
