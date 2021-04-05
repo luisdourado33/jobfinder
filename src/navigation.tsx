@@ -4,6 +4,7 @@ import { PALETTES } from './theme';
 
 import Login from './screens/Login';
 import Dashboard from './screens/dashboard';
+import AdminPanel from './screens/admin';
 
 /**
  * Job Routes
@@ -54,6 +55,7 @@ const AppRouter: React.FC = () => {
       <Route path='/' exact component={Home} />
       <Route path='/login' component={Login} />
       <Route path='/dashboard' component={Dashboard} />
+      <Route path='/admin' component={AdminPanel} />
       <Route path='/jobs/overview/:jobId' component={Overview} />
     </Router>
   );
