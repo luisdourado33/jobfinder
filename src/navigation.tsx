@@ -6,9 +6,6 @@ import Login from './screens/Login';
 import Dashboard from './screens/dashboard';
 import AdminPanel from './screens/admin';
 
-/**
- * Job Routes
- */
 import Overview from './screens/jobs/Overview';
 
 const divTemp = {

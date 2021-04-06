@@ -13,6 +13,9 @@ export interface IUser {
   role_id: number;
   role_name?: string;
   cpf: string;
+  access?: number;
+  jobsCreated?: number;
+  jobsSigned?: number;
   birthDate: Date | null | string;
   status?: boolean;
 }
@@ -23,7 +26,7 @@ export type Role = {
   status: boolean;
   created_at: Date;
   updated_at: Date;
-}
+};
 
 export type Company = {
   id: number;
@@ -31,4 +34,4 @@ export type Company = {
   status: boolean;
   created_at: Date;
   updated_at: Date;
-}
+};
