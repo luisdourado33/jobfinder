@@ -45,7 +45,11 @@ const NewRole: React.FC = () => {
         setRoles(response.data);
       })
       .catch((err) => {
-        alert('Dados inválidos!');
+        swal({
+          title: 'Falha na conexão',
+          text: `Houve um erro ao conectar-se ao banco de dados.`,
+          icon: 'error',
+        });
       });
   }
 
@@ -109,7 +113,7 @@ const NewRole: React.FC = () => {
           collapsible>
           <Sidenav.Header>
             <div style={headerStyles}>
-              Olá, <b>Luís</b>!
+              <b>Job Finder - Painel Administrativo</b>
             </div>
           </Sidenav.Header>
           <Navbar />

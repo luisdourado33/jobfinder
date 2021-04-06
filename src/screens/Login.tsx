@@ -1,13 +1,12 @@
 import React, { useState, useEffect } from 'react';
-import SVG, { Props as SVGProps } from 'react-inlinesvg'; // Aprender a usar corretamente
 import styled from 'styled-components';
+import api from '../services/api';
 import swal from 'sweetalert';
 import { cpfMask } from '../helpers';
 import { PALETTES } from '../theme';
 import { Formik, Form } from 'formik';
-import { Redirect } from 'react-router-dom';
 import { ArrowForwardIcon } from '@chakra-ui/icons';
-import { IFormValues, IFormSignUp } from '../types';
+import { IFormValues, IUser, Role } from '../types';
 import {
   useDisclosure,
   FormControl,
@@ -15,6 +14,7 @@ import {
   Input,
   Button,
   Checkbox,
+  Select,
   Drawer,
   DrawerBody,
   DrawerFooter,
@@ -23,10 +23,6 @@ import {
   DrawerContent,
   DrawerCloseButton,
 } from '@chakra-ui/react';
-
-const BrandVector = React.forwardRef<SVGElement, SVGProps>((props, ref) => (
-  <SVG innerRef={ref} title='Work Together' {...props} />
-));
 
 const Container = styled.div`
   /* background-color: ${PALETTES.dark}; */
@@ -122,15 +118,23 @@ const Paragraph = styled.p`
 
 const FormLogin: React.FC<{}> = () => {
   const [isLoading, setIsLoading] = useState(false);
+  const [roles, setRoles] = useState<Role[]>();
   const { isOpen, onOpen, onClose } = useDisclosure();
   const currentlyTime = new Date(Date.now());
 
-  const initialSignUpValues: IFormSignUp = {
-    fullName: '',
+  async function getRoles() {
+    await api.get('roles').then((response) => {
+      setRoles(response.data);
+      console.log(response.data);
+    });
+  }
+
+  const initialSignUpValues: IUser = {
+    username: '',
     email: '',
     password: '',
     passwordRepeat: '',
-    occupation: '',
+    role_id: 0,
     cpf: '',
     birthDate: null,
   };
@@ -149,17 +153,38 @@ const FormLogin: React.FC<{}> = () => {
     }, 2000);
   }
 
-  function handleSignUp(formFields: IFormSignUp) {
+  async function handleSignUp(formFields: IUser) {
     console.log(JSON.stringify(formFields));
-    swal(
-      'Conta criada com sucesso!',
-      `Seja bem-vindo(a), ${formFields.fullName}!`,
-      'success'
-    );
+
+    await api
+      .post('users', {
+        role_id: formFields.role_id,
+        username: formFields.username,
+        birthDate: formFields.birthDate,
+        email: formFields.email,
+        password: formFields.password,
+        cpf: formFields.cpf,
+      })
+      .then((success) => {
+        swal({
+          title: 'Conta criada!',
+          text: `Seja bem-vind@, ${formFields.username}`,
+          icon: 'success',
+        });
+      })
+      .catch((error) => {
+        swal({
+          title: 'Houve um erro!',
+          text:
+            'Ocorreu um erro ao criar conta. Favor, tente novamente mais tarde!',
+          icon: 'error',
+        });
+      });
   }
 
   useEffect(() => {
     window.document.title = 'Acessar a plataforma | Job Finder';
+    getRoles();
   }, []);
 
   return (
@@ -179,22 +204,23 @@ const FormLogin: React.FC<{}> = () => {
                 }}>
                 {(props) => (
                   <Form>
-                    <FormControl marginBlock={5} id='fullName' isRequired>
-                      <FormLabel marginBottom={4} htmlFor='name'>
+                    <FormControl marginBlock={5} id='username' isRequired>
+                      <FormLabel marginBottom={4} htmlFor='username'>
                         Nome completo
                       </FormLabel>
                       <Input
-                        onChange={props.handleChange('fullName')}
-                        id='fullName'
+                        onChange={props.handleChange('username')}
+                        id='username'
                         variant='flushed'
                         type='text'
                         placeholder='Ex: John Doe'
                       />
                     </FormControl>
                     <FormControl marginBlock={5} id='birthDate' isRequired>
-                      <FormLabel marginBottom={4} htmlFor='text'>
+                      <FormLabel marginBottom={4} htmlFor='date'>
                         Data de Nascimento
                       </FormLabel>
+                      <h1>{props.values.birthDate}</h1>
                       <Input
                         onChange={props.handleChange('birthDate')}
                         id='birthDate'
@@ -238,17 +264,22 @@ const FormLogin: React.FC<{}> = () => {
                         placeholder='Mínimo 8 caracteres'
                       />
                     </FormControl>
-                    <FormControl marginBlock={5} id='occupation' isRequired>
+                    <FormControl marginBlock={5} id='role_id' isRequired>
                       <FormLabel marginBottom={4} htmlFor='text'>
                         Ocupação
                       </FormLabel>
-                      <Input
-                        onChange={props.handleChange('occupation')}
-                        id='occupation'
-                        variant='flushed'
-                        type='text'
-                        placeholder='Ex: Desenvolvedor de Software'
-                      />
+                      <Select
+                        onChange={(e) =>
+                          props.setFieldValue('role_id', e.target.value)
+                        }
+                        placeholder='Selecione sua ocupação'>
+                        {roles &&
+                          roles.map((role: Role, key) => (
+                            <option key={key} value={role.id}>
+                              {role.name}
+                            </option>
+                          ))}
+                      </Select>
                     </FormControl>
                     <FormControl marginBlock={5} id='cpf' isRequired>
                       <FormLabel marginBottom={4} htmlFor='text'>

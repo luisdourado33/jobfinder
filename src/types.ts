@@ -4,14 +4,17 @@ export interface IFormValues {
   rememberCredentials: boolean;
 }
 
-export interface IFormSignUp {
-  fullName: string;
+export interface IUser {
+  id?: number;
+  username: string;
   email: string;
   password: string;
   passwordRepeat: string;
-  occupation: string;
+  role_id: number;
+  role_name?: string;
   cpf: string;
-  birthDate: Date | null;
+  birthDate: Date | null | string;
+  status?: boolean;
 }
 
 export type Role = {

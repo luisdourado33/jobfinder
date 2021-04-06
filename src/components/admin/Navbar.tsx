@@ -26,17 +26,25 @@ const Navbar: React.FC = () => {
             </Nav.Item> */}
             <Dropdown
               eventKey='2'
-              title='Profissões'
+              title='Usuários'
               icon={<Icon icon='magic' />}>
               <Dropdown.Item eventKey='2-1'>
-                <Link to='/admin/new-role'>Gerenciar profissões</Link>
+                <Link to='/admin/new-user'>Gerenciar usuários</Link>
               </Dropdown.Item>
             </Dropdown>
             <Dropdown
               eventKey='3'
-              title='Categorias de Empresas'
+              title='Profissões'
               icon={<Icon icon='magic' />}>
               <Dropdown.Item eventKey='3-1'>
+                <Link to='/admin/new-role'>Gerenciar profissões</Link>
+              </Dropdown.Item>
+            </Dropdown>
+            <Dropdown
+              eventKey='4'
+              title='Categorias de Empresas'
+              icon={<Icon icon='magic' />}>
+              <Dropdown.Item eventKey='4-1'>
                 <Link to='/admin/new-company'>Gerenciar categorias</Link>
               </Dropdown.Item>
             </Dropdown>

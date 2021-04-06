@@ -15,12 +15,14 @@ import { headerStyles, PALETTES } from '../../theme';
 import Navbar from '../../components/admin/Navbar';
 import NewRole from '../../screens/admin/role/new-role';
 import NewCompany from '../../screens/admin/company/new-company';
+import NewUser from '../../screens/admin/user/new-user';
 
 const AdminPanel: React.FC = () => {
   const [expand, setExpand] = useState<boolean>(true);
 
   useEffect(() => {
-    window.document.title = 'Painel Administrativo | Job Finder';
+    window.document.title =
+      '<b>Job Finder - Painel Administrativo</b> | Job Finder';
   }, []);
 
   return (
@@ -35,7 +37,9 @@ const AdminPanel: React.FC = () => {
           collapsible>
           <Sidenav.Header>
             <div style={headerStyles}>
-              <b>Painel Administrativo</b>
+              <b>
+                <b>Job Finder - Painel Administrativo</b>
+              </b>
             </div>
           </Sidenav.Header>
           <Navbar />
@@ -59,6 +63,7 @@ const AdminRouter: React.FC = () => {
       <Route path='/admin' exact component={AdminPanel} />
       <Route path='/admin/new-role' component={NewRole} />
       <Route path='/admin/new-company' component={NewCompany} />
+      <Route path='/admin/new-user' component={NewUser} />
     </Router>
   );
 };
