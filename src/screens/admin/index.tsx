@@ -30,7 +30,7 @@ const AdminPanel: React.FC = () => {
   const [expand, setExpand] = useState<boolean>(true);
 
   useEffect(() => {
-    window.document.title = 'Job Finder - Painel Administrativo | Job Finder';
+    window.document.title = 'Painel Administrativo | Job Finder';
   }, []);
 
   return (
@@ -46,7 +46,7 @@ const AdminPanel: React.FC = () => {
           <Sidenav.Header>
             <div style={headerStyles}>
               <b>
-                <b>Job Finder - Painel Administrativo</b>
+                <b>Painel Administrativo</b>
               </b>
             </div>
           </Sidenav.Header>

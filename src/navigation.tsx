@@ -27,13 +27,13 @@ const Home: React.FC = () => {
           </Link>
         </li>
         <li>
-          <Link to='/login'>
+          <Link to='/cadastro'>
             Drawer de Cadastro <b>(100%)</b>
           </Link>
         </li>
         <li>
           <Link to='/dashboard'>
-            Página de dashboard <b>(0%)</b>
+            Página de dashboard <b>(95%)</b>
           </Link>
         </li>
         <li>

@@ -60,6 +60,7 @@ const NewRole: React.FC = () => {
         status: role.status,
       })
       .then((success) => {
+        getRoles();
         swal({
           title: 'Profissão adicionada!',
           text: `Profissão ${success.data.name} adicionada com sucesso.`,
@@ -85,6 +86,7 @@ const NewRole: React.FC = () => {
     }).then(async (willDelete) => {
       if (willDelete) {
         await api.delete(`/roles/${roleId}`).then((success) => {
+          getRoles();
           swal(success.data.msg, {
             icon: 'success',
           });
@@ -113,7 +115,7 @@ const NewRole: React.FC = () => {
           collapsible>
           <Sidenav.Header>
             <div style={headerStyles}>
-              <b>Job Finder - Painel Administrativo</b>
+              <b>Painel Administrativo</b>
             </div>
           </Sidenav.Header>
           <Navbar />

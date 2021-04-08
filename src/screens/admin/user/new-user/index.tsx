@@ -85,6 +85,7 @@ const NewUser: React.FC = () => {
         cpf: formFields.cpf,
       })
       .then((success) => {
+        getUsers();
         swal({
           title: 'Conta criada!',
           text: `Seja bem-vind@, ${formFields.username}`,
@@ -150,7 +151,7 @@ const NewUser: React.FC = () => {
           collapsible>
           <Sidenav.Header>
             <div style={headerStyles}>
-              <b>Job Finder - Painel Administrativo</b>
+              <b>Painel Administrativo</b>
             </div>
           </Sidenav.Header>
           <Navbar />
@@ -174,7 +175,7 @@ const NewUser: React.FC = () => {
               <TabPanels>
                 <TabPanel>
                   <div>
-                    <Badge colorScheme='teal' marginBlock={2}>
+                    <Badge colorScheme='messenger' marginBlock={2}>
                       Usuários cadastrados: {users?.length}
                     </Badge>
                     <Table variant='striped' colorScheme='blue'>
@@ -231,7 +232,7 @@ const NewUser: React.FC = () => {
                                 {user.status ? (
                                   <Badge colorScheme='green'>Ativo</Badge>
                                 ) : (
-                                  <Badge colorScheme='red'>Inativo</Badge>
+                                  <Badge colorScheme='red'>Bloqueado</Badge>
                                 )}
                               </Td>
                               <Td>

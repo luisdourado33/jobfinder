@@ -58,6 +58,7 @@ const NewCompany: React.FC = () => {
         status: type.status,
       })
       .then((success) => {
+        getCompanies();
         swal({
           title: 'Tipo de empresa adicionado!',
           text: `Tipo ${success.data.name} adicionada(o) com sucesso.`,
@@ -83,6 +84,7 @@ const NewCompany: React.FC = () => {
     }).then(async (willDelete) => {
       if (willDelete) {
         await api.delete(`/companies/${companyId}`).then((success) => {
+          getCompanies();
           swal(success.data.msg, {
             icon: 'success',
           });
@@ -111,7 +113,7 @@ const NewCompany: React.FC = () => {
           collapsible>
           <Sidenav.Header>
             <div style={headerStyles}>
-              <b>Job Finder - Painel Administrativo</b>
+              <b>Painel Administrativo</b>
             </div>
           </Sidenav.Header>
           <Navbar />
