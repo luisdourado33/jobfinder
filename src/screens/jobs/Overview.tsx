@@ -1,7 +1,9 @@
 import React, { useState, useEffect } from 'react';
 import 'rsuite/dist/styles/rsuite-default.css';
+import api from '../../services/api';
 import { Container, Header, Content, Footer, Message } from 'rsuite';
 import { PALETTES } from '../../theme';
+import { IJob } from '../../types';
 import { useParams } from 'react-router-dom';
 
 import Navbar from '../../components/dashboard/Navbar';
@@ -13,9 +15,24 @@ type IOverviewProps = {
 
 const Overview: React.FC<IOverviewProps> = ({ title }) => {
   let { jobId } = useParams<any>();
+  const [job, setJob] = useState<IJob>();
+
+  async function getJob() {
+    await api
+      .get('/jobs/' + jobId)
+      .then((response) => {
+        setJob(response.data);
+        if (job) {
+          window.document.title = `${jobId} - ${job?.title} | Job Finder`;
+        }
+      })
+      .catch((error) => {
+        alert('Houve um erro ao carregar a vaga');
+      });
+  }
 
   useEffect(() => {
-    window.document.title = `Vaga #${jobId} | Job Finder`;
+    getJob();
   }, []);
 
   return (
@@ -25,17 +42,19 @@ const Overview: React.FC<IOverviewProps> = ({ title }) => {
           <Navbar />
         </Header>
         <Content>
-          <Jobotron
-            jobId={jobId}
-            location={'Cuiabá, MT'}
-            createdAt={'03 de abril de 2021'}
-            period={'Tempo integral'}
-            isRemote={true}
-            title='Desenvolvedor FullStack Pleno'
-            owner='Ártico Tecnologia'
-            subtitle='Pariatur aliqua officia ea nulla dolore id proident. Enim ea minim ipsum irure duis consectetur et elit officia elit elit. Aliquip anim laboris sunt consectetur sunt. Deserunt dolor labore non do est ex ipsum non tempor aliquip nisi aliqua. Nulla culpa minim eu magna sit duis. Quis proident excepteur sint est sint exercitation consequat. Ullamco pariatur cupidatat eu est adipisicing culpa officia nisi. Non tempor amet sunt occaecat ea sit.'
-            status={true}
-          />
+          {job && (
+            <Jobotron
+              jobId={jobId}
+              location={job?.location}
+              createdAt={job.created_at}
+              period={job.period}
+              isRemote={true}
+              title={job.title}
+              owner='Ártico Tecnologia'
+              subtitle={job.description}
+              status={true}
+            />
+          )}
         </Content>
         <Footer>
           <p>Footer</p>

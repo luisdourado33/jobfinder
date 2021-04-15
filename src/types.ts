@@ -3,7 +3,13 @@ export interface IFormValues {
   password: string;
   rememberCredentials: boolean;
 }
-
+export interface IFormNewJob {
+  user_id: number;
+  title: string;
+  description: string;
+  period: string;
+  location: string;
+}
 export interface IUser {
   id?: number;
   username: string;
@@ -35,3 +41,15 @@ export type Company = {
   created_at: Date;
   updated_at: Date;
 };
+
+export type IJob = {
+  id?: number;
+  user_id?: number;
+  title: string;
+  description: string;
+  period: string;
+  location: string;
+  created_at: string;
+  updated_at: string;
+  user?: { username: string;};
+}

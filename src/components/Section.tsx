@@ -1,7 +1,7 @@
 import React from 'react';
 import styled from 'styled-components';
 import { PALETTES } from '../theme';
-
+import { Text } from '@chakra-ui/react';
 interface IProps {
   title: string;
   subtitle: string;
@@ -15,7 +15,7 @@ function getTheme(theme: string) {
   };
   switch (theme) {
     case 'light':
-      themeObj.bg = PALETTES.light;
+      themeObj.bg = '#FFF';
       themeObj.color = PALETTES.dark;
       break;
     case 'dark':

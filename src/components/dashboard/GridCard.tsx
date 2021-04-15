@@ -1,28 +1,30 @@
-import React from 'react';
+import React, { useEffect } from 'react';
+import { IJob } from '../../types';
 import { SimpleGrid, Box } from '@chakra-ui/react';
 import JobCard from '../JobCard';
 
 interface IProps {
-  cardData: string; // Alterar para objeto futuramente!
+  cardData: Array<IJob>;
 }
 
 const GridCard: React.FC<IProps> = (props) => {
-  let cardAmount = 5;
-  let mockArr: Array<number> = [];
-  for (let i = 1; i <= cardAmount; i++) {
-    mockArr.push(i);
-  }
+  useEffect(() => {
+    console.log(`Jobs recebidos: ${props.cardData.length}`);
+    console.log(props.cardData);
+  }, []);
 
   return (
     <SimpleGrid columns={[2, null, 3]} spacing='50px' marginInline={5}>
-      {mockArr.map((card) => (
+      {props.cardData.map((job: IJob) => (
         <JobCard
-          title='Desenvolvedor de Software em Cuiabá'
-          description='Vaga para Dev. FullStack em xxx'
-          period='Tempo integral'
-          createdAt='01/01/2000'
-          owner='Ártico Tecnologia'
-          location='Cuiabá - MT'
+          key={job.id}
+          id={job.id}
+          title={job.title}
+          description={job.description}
+          period={job.period}
+          createdAt={job.created_at}
+          owner={job.user?.username}
+          location={job.location}
         />
       ))}
     </SimpleGrid>

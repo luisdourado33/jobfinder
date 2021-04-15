@@ -1,7 +1,9 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useContext } from 'react';
 import styled from 'styled-components';
+import { AuthContext } from '../context/AuthContext';
 import api from '../services/api';
 import swal from 'sweetalert';
+import { ToastContainer, toast } from 'react-toastify';
 import { cpfMask } from '../helpers';
 import { PALETTES } from '../theme';
 import { Formik, Form } from 'formik';
@@ -117,6 +119,7 @@ const Paragraph = styled.p`
 `;
 
 const FormLogin: React.FC<{}> = () => {
+  const { state, setState } = useContext(AuthContext);
   const [isLoading, setIsLoading] = useState(false);
   const [roles, setRoles] = useState<Role[]>();
   const { isOpen, onOpen, onClose } = useDisclosure();
@@ -125,7 +128,6 @@ const FormLogin: React.FC<{}> = () => {
   async function getRoles() {
     await api.get('roles').then((response) => {
       setRoles(response.data);
-      console.log(response.data);
     });
   }
 
@@ -145,17 +147,56 @@ const FormLogin: React.FC<{}> = () => {
     rememberCredentials: false,
   };
 
-  function handleSignIn() {
+  async function handleSignIn(userCredentials: IFormValues) {
     setIsLoading(true);
-    setTimeout(() => {
-      setIsLoading(false);
-      window.location.href = '/dashboard';
-    }, 2000);
+    await api
+      .post('/login', {
+        email: userCredentials.email,
+        password: userCredentials.password,
+      })
+      .then((success) => {
+        const { id, username, email } = success.data.user[0];
+        let userToken = success.data.token.token;
+
+        setState({
+          ...state,
+          id: parseInt(id),
+          username: username,
+          email: email,
+        });
+        api.defaults.headers.Authorization = `Bearer ${userToken}`;
+        localStorage.setItem('token', JSON.stringify(userToken));
+
+        toast.success(`Seja bem vindo, ${username}!`, {
+          position: 'top-right',
+          autoClose: 5000,
+          hideProgressBar: false,
+          closeOnClick: true,
+          pauseOnHover: true,
+          draggable: true,
+          progress: undefined,
+        });
+        setIsLoading(false);
+        setTimeout(() => {
+          window.location.href = '/dashboard';
+        }, 3000);
+      })
+      .catch((error) => {
+        console.log(error);
+        toast.error('Houve um erro ao realizar o login.', {
+          position: 'top-right',
+          autoClose: 5000,
+          hideProgressBar: false,
+          closeOnClick: true,
+          pauseOnHover: true,
+          draggable: true,
+          progress: undefined,
+        });
+        setIsLoading(false);
+      });
   }
 
   async function handleSignUp(formFields: IUser) {
-    console.log(JSON.stringify(formFields));
-
     await api
       .post('users', {
         role_id: formFields.role_id,
@@ -316,17 +357,18 @@ const FormLogin: React.FC<{}> = () => {
         initialValues={initialValues}
         onSubmit={(values, actions) => {
           console.log({ values, actions });
-          alert(JSON.stringify(values, null, 2));
+          handleSignIn(values);
           actions.setSubmitting(false);
         }}>
         {(props) => (
           <Form>
             <FormControl id='email' isRequired>
               <FormLabel marginBottom={4} htmlFor='email'>
-                E-mail
+                E-mail ({state.username})
               </FormLabel>
               <Input
                 variant='flushed'
+                onChange={props.handleChange('email')}
                 type='email'
                 placeholder='Ex: johndoe@email.com'
               />
@@ -337,6 +379,7 @@ const FormLogin: React.FC<{}> = () => {
               </FormLabel>
               <Input
                 variant='flushed'
+                onChange={props.handleChange('password')}
                 type='password'
                 placeholder='Mínimo 8 caracteres.'
                 required
@@ -359,7 +402,7 @@ const FormLogin: React.FC<{}> = () => {
                 Criar uma conta
               </Button>
               <Button
-                onClick={() => handleSignIn()}
+                type='submit'
                 isLoading={isLoading}
                 leftIcon={<ArrowForwardIcon />}
                 borderWidth={1}
@@ -393,6 +436,19 @@ const Login: React.FC = () => {
           <FormLogin />
         </FormSide>
       </Wrapper>
+      <ToastContainer
+        position='top-right'
+        autoClose={5000}
+        hideProgressBar={false}
+        newestOnTop={false}
+        closeOnClick
+        rtl={false}
+        pauseOnFocusLoss
+        draggable
+        pauseOnHover
+      />
+      {/* Same as */}
+      <ToastContainer />
     </Container>
   );
 };

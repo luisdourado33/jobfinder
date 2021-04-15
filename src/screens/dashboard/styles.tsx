@@ -30,13 +30,17 @@ export const Navbar = styled.nav`
 `;
 
 export const Jumbotron = styled.div`
-  background-color: ${PALETTES.light};
+  background-color: ${PALETTES.yellowGold};
   /* background-color: #ffffff; */
-  background-image: url('https://www.transparenttextures.com/patterns/asfalt-dark.png');
+  background-image: url('https://www.transparenttextures.com/patterns/arches.png');
   justify-content: center;
   align-items: center;
   flex: 1;
   display: flex;
+
+  @media (max-width: 768px) {
+    flex: auto;
+  }
 
   h1 {
     width: 50%;
@@ -44,7 +48,7 @@ export const Jumbotron = styled.div`
     margin-bottom: 20px;
     font-size: 30px;
     font-weight: bold;
-    color: #333;
+    color: #000;
   }
 
   p {
@@ -59,4 +63,49 @@ export const JumbotronSeparator = styled.div`
   justify-content: space-between;
   flex: content;
   display: flex;
+`;
+
+export const JumbotronSeparatorContent = styled.div`
+  flex-direction: column;
+  flex: 1;
+  display: flex;
+  padding: 100px;
+  justify-content: center;
+  align-content: flex-start;
+  align-items: flex-start;
+
+  @media (max-width: 768px) {
+    align-content: center;
+    align-items: center;
+
+    h1 {
+      text-align: center;
+      flex: 1;
+      width: 95%;
+    }
+  }
+`;
+
+export const InputGroupWrap = styled.div`
+  flex-direction: column;
+  flex: auto;
+
+  @media (max-width: 768px) {
+    flex-direction: column;
+    align-items: center;
+    align-content: center;
+    align-self: center;
+    justify-content: center;
+    flex: 1;
+    display: flex;
+  }
+`;
+
+export const ImageWrap = styled.div`
+  flex: 1;
+  display: flex;
+
+  @media (max-width: 768px) {
+    display: none;
+  }
 `;

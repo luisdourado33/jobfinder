@@ -20,7 +20,10 @@ export const PALETTES = {
   light: '#f6f6f6',
   semiLight: '#c7ffd8',
   semiDark: '#98ded9',
-  dark: '#161d6f',
+  semisemiDark: '#4DB3FF',
+  yellowGold: '#F5C922',
+  dark: '#12161C',
+  error: '#ED6A5A',
 };
 
 export const headerStyles = {

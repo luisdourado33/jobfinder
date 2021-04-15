@@ -14,13 +14,13 @@ import { FaClipboardCheck } from 'react-icons/fa';
 interface IJobotronProps {
   title: string;
   subtitle: string;
-  jobId: string;
+  jobId: number;
   location: string;
   createdAt: string;
-  owner: string;
+  owner?: string;
   period: string;
-  isRemote: boolean;
-  status: boolean;
+  isRemote?: boolean;
+  status?: boolean;
 }
 
 export const Jumbotron = styled.div`
@@ -53,6 +53,7 @@ export const JumbotronSeparator = styled.div`
   justify-content: space-between;
   flex: content;
   display: flex;
+  box-shadow: 10px 5px 5px black;
 `;
 
 export const Description = styled.h3`

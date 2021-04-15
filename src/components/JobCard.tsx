@@ -6,6 +6,7 @@ import { FaMapMarkerAlt } from 'react-icons/fa';
 import { PALETTES } from '../theme';
 
 interface IProps {
+  id?: number;
   title?: string;
   description?: string;
   period?: string;
@@ -81,12 +82,12 @@ const CardFooter = styled.div`
 
 const JobCard: React.FC<IProps> = (props) => {
   return (
-    <Card onClick={() => alert(JSON.stringify(props))}>
+    <Card onClick={() => (window.location.href = `jobs/overview/${props.id}`)}>
       <CardHeader>
         <Flex>
           <Avatar bg={PALETTES.dark} />
-          <Box ml='2'>
-            <Text fontWeight='bold'>
+          <Box justifyContent='flex-start' flex='auto' ml='2'>
+            <Text alignSelf='flex-start' fontWeight='bold'>
               {props.owner}
               <Badge ml='1' colorScheme='green'>
                 Novo
@@ -100,14 +101,12 @@ const JobCard: React.FC<IProps> = (props) => {
       </CardHeader>
       <CardContent>
         <h1>{props.title}</h1>
+        <Text fontSize='xsm'>{props.description}</Text>
         <Badge variant='outline' colorScheme='green'>
           {props.period}
         </Badge>
       </CardContent>
-      <CardFooter>
-        <div>
-          <h1>{props.owner}</h1>
-        </div>
+      <CardFooter style={{ alignSelf: 'flex-end', flex: '1' }}>
         <div>
           <Button
             leftIcon={<FaMapMarkerAlt />}

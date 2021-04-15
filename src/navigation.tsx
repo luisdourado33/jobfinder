@@ -1,12 +1,14 @@
 import React from 'react';
-import { BrowserRouter as Router, Route, Link } from 'react-router-dom';
+import { BrowserRouter as Router, Route, Switch, Link } from 'react-router-dom';
 import { PALETTES } from './theme';
+import { AuthProvider } from './context/AuthContext';
 
 import Login from './screens/Login';
 import Dashboard from './screens/dashboard';
 import AdminPanel from './screens/admin';
 
 import Overview from './screens/jobs/Overview';
+import NewJob from './screens/jobs/NewJob';
 
 const divTemp = {
   backgroundColor: PALETTES.dark,
@@ -48,13 +50,18 @@ const Home: React.FC = () => {
 
 const AppRouter: React.FC = () => {
   return (
-    <Router>
-      <Route path='/' exact component={Home} />
-      <Route path='/login' component={Login} />
-      <Route path='/dashboard' component={Dashboard} />
-      <Route path='/admin' component={AdminPanel} />
-      <Route path='/jobs/overview/:jobId' component={Overview} />
-    </Router>
+    <AuthProvider>
+      <Router>
+        <Switch>
+          <Route path='/' exact component={Home} />
+          <Route path='/login' component={Login} />
+          <Route path='/dashboard' component={Dashboard} />
+          <Route path='/admin' component={AdminPanel} />
+          <Route path='/jobs/overview/:jobId' component={Overview} />
+          <Route path='/jobs/new-job' component={NewJob} />
+        </Switch>
+      </Router>
+    </AuthProvider>
   );
 };
 
