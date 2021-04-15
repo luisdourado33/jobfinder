@@ -1,6 +1,6 @@
 import React, { useEffect } from 'react';
 import { IJob } from '../../types';
-import { SimpleGrid, Box } from '@chakra-ui/react';
+import { SimpleGrid } from '@chakra-ui/react';
 import JobCard from '../JobCard';
 
 interface IProps {
@@ -8,11 +8,6 @@ interface IProps {
 }
 
 const GridCard: React.FC<IProps> = (props) => {
-  useEffect(() => {
-    console.log(`Jobs recebidos: ${props.cardData.length}`);
-    console.log(props.cardData);
-  }, []);
-
   return (
     <SimpleGrid columns={[2, null, 3]} spacing='50px' marginInline={5}>
       {props.cardData.map((job: IJob) => (

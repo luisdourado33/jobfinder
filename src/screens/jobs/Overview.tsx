@@ -1,13 +1,14 @@
 import React, { useState, useEffect } from 'react';
 import 'rsuite/dist/styles/rsuite-default.css';
 import api from '../../services/api';
-import { Container, Header, Content, Footer, Message } from 'rsuite';
 import { PALETTES } from '../../theme';
 import { IJob } from '../../types';
 import { useParams } from 'react-router-dom';
+import { Container, Header, Content, Message } from 'rsuite';
 
 import Navbar from '../../components/dashboard/Navbar';
 import Jobotron from '../../components/overview/Jobotron';
+import Footer from '../../components/Footer';
 
 type IOverviewProps = {
   title: string;
@@ -56,9 +57,7 @@ const Overview: React.FC<IOverviewProps> = ({ title }) => {
             />
           )}
         </Content>
-        <Footer>
-          <p>Footer</p>
-        </Footer>
+        <Footer />
       </Container>
     </div>
   );

@@ -51,5 +51,5 @@ export type IJob = {
   location: string;
   created_at: string;
   updated_at: string;
-  user?: { username: string;};
-}
+  user?: { username: string };
+};

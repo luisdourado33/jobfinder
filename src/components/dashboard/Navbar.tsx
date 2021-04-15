@@ -49,9 +49,19 @@ const Navbar: React.FC = () => {
           <Nav.Item>Páginas</Nav.Item>
         </Nav>
         <Nav pullRight>
+          <Nav.Item
+            href='/admin'
+            icon={<Icon icon='cog' style={{ color: PALETTES.light }} />}
+            style={{ backgroundColor: 'orangered' }}>
+            {isAuth && 'Painel Administrativo'}
+          </Nav.Item>
+        </Nav>
+        <Nav
+          pullRight
+          style={{ alignItems: 'center', flex: 1, display: 'flex' }}>
           {isAuth ? (
             <UserOptionsDropdown
-              title={`Olá, ${state.username}`}
+              title={`Olá, ${'state.username'}`}
               trigger={['click', 'hover']}
             />
           ) : (

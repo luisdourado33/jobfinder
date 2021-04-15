@@ -447,7 +447,6 @@ const Login: React.FC = () => {
         draggable
         pauseOnHover
       />
-      {/* Same as */}
       <ToastContainer />
     </Container>
   );

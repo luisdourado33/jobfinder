@@ -92,7 +92,12 @@ const Dashboard: React.FC = () => {
         </Section>
       </Content>
       <Footer
-        style={{ padding: 10, backgroundColor: PALETTES.dark, color: '#eee' }}>
+        style={{
+          padding: 30,
+          paddingLeft: 100,
+          backgroundColor: PALETTES.dark,
+          color: '#eee',
+        }}>
         <h3>Job Finder - Todos os direitos reservados</h3>
       </Footer>
     </Container>

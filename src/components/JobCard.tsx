@@ -1,7 +1,6 @@
 import React from 'react';
 import styled from 'styled-components';
 import { Button, Badge, Flex, Avatar, Box, Text } from '@chakra-ui/react';
-import { ArrowForwardIcon } from '@chakra-ui/icons';
 import { FaMapMarkerAlt } from 'react-icons/fa';
 import { PALETTES } from '../theme';
 
