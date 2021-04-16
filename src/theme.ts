@@ -29,6 +29,6 @@ export const PALETTES = {
 export const headerStyles = {
   padding: 20,
   fontSize: 16,
-  background: PALETTES.dark,
+  background: PALETTES.yellowGold,
   color: ' #fff',
 };

@@ -13,13 +13,7 @@ import {
   ImageWrap,
 } from './styles';
 import { Container, Header, Content, Footer } from 'rsuite';
-import {
-  Input,
-  InputGroup,
-  InputLeftElement,
-  Button,
-  Text,
-} from '@chakra-ui/react';
+import { Input, InputGroup, Button, Text } from '@chakra-ui/react';
 
 import Navbar from '../../components/dashboard/Navbar';
 import Section from '../../components/Section';
@@ -41,7 +35,7 @@ const Dashboard: React.FC = () => {
   }
 
   useEffect(() => {
-    window.document.title = 'Plataforma | Job Finder';
+    window.document.title = 'Plataforma - Job Finder';
     getJobs();
   }, []);
 

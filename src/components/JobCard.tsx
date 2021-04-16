@@ -17,15 +17,16 @@ interface IProps {
 const Card = styled.div`
   border-radius: 5px;
   padding: 15px;
-  border-color: transparent;
-  border-width: 1px;
+  border-color: #eee;
+  border-width: 1.5px;
   background-color: #fff;
   transition: background-color 0.5s;
   align-items: flex-start;
   align-content: flex-start;
+  box-shadow: 1px 4px 4px #eee;
   justify-content: flex-start;
   flex-direction: column;
-  box-shadow: 5px 5px 5px ${PALETTES.dark};
+
   flex: 1;
   display: flex;
 

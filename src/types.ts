@@ -14,15 +14,15 @@ export interface IUser {
   id?: number;
   username: string;
   email: string;
-  password: string;
-  passwordRepeat: string;
-  role_id: number;
-  role_name?: string;
-  cpf: string;
+  password?: string;
+  passwordRepeat?: string;
+  role_id?: number;
+  roles?: object;
+  cpf?: string;
   access?: number;
   jobsCreated?: number;
   jobsSigned?: number;
-  birthDate: Date | null | string;
+  birthDate?: Date | null | string;
   status?: boolean;
 }
 

@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
 import {
   Container,
@@ -13,18 +13,42 @@ import {
 } from 'rsuite';
 
 const Navbar: React.FC = () => {
+  const [active, setActive] = useState('3');
+
+  function handleChangePage(pageActive: string) {
+    setActive(pageActive);
+  }
+
   return (
     <div style={{ width: 250 }}>
-      <Sidenav defaultOpenKeys={['3', '4']} activeKey='1'>
+      <Sidenav activeKey={active}>
         <Sidenav.Body>
           <Nav>
-            <Nav.Item eventKey='1' icon={<Icon icon='dashboard' />}>
+            <Nav.Item
+              onSelect={() => handleChangePage('1')}
+              eventKey='1'
+              icon={<Icon icon='dashboard' />}>
               <Link to='/admin'>Dashboard</Link>
             </Nav.Item>
-            {/* <Nav.Item eventKey='2' icon={<Icon icon='group' />}>
-              User Group
-            </Nav.Item> */}
-            <Dropdown
+            <Nav.Item
+              onSelect={() => handleChangePage('2')}
+              eventKey='2'
+              icon={<Icon icon='dashboard' />}>
+              <Link to='/admin/new-user'>Usuários</Link>
+            </Nav.Item>
+            <Nav.Item
+              onSelect={() => handleChangePage('3')}
+              eventKey='3'
+              icon={<Icon icon='dashboard' />}>
+              <Link to='/admin/new-role'>Profissões</Link>
+            </Nav.Item>
+            <Nav.Item
+              onSelect={() => handleChangePage('4')}
+              eventKey='4'
+              icon={<Icon icon='dashboard' />}>
+              <Link to='/admin/new-company'>Categorias</Link>
+            </Nav.Item>
+            {/* <Dropdown
               eventKey='2'
               title='Usuários'
               icon={<Icon icon='magic' />}>
@@ -47,7 +71,7 @@ const Navbar: React.FC = () => {
               <Dropdown.Item eventKey='4-1'>
                 <Link to='/admin/new-company'>Gerenciar categorias</Link>
               </Dropdown.Item>
-            </Dropdown>
+            </Dropdown> */}
           </Nav>
         </Sidenav.Body>
       </Sidenav>

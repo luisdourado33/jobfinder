@@ -25,6 +25,7 @@ import {
   DrawerContent,
   DrawerCloseButton,
 } from '@chakra-ui/react';
+import { Link } from 'react-router-dom';
 
 const Container = styled.div`
   /* background-color: ${PALETTES.dark}; */
@@ -160,12 +161,14 @@ const FormLogin: React.FC<{}> = () => {
 
         setState({
           ...state,
-          id: parseInt(id),
-          username: username,
-          email: email,
+          isAuth: true,
+          userData: success.data.user[0],
         });
+
         api.defaults.headers.Authorization = `Bearer ${userToken}`;
+
         localStorage.setItem('token', JSON.stringify(userToken));
+        localStorage.setItem('@userId', id);
 
         toast.success(`Seja bem vindo, ${username}!`, {
           position: 'top-right',
@@ -176,6 +179,7 @@ const FormLogin: React.FC<{}> = () => {
           draggable: true,
           progress: undefined,
         });
+
         setIsLoading(false);
         setTimeout(() => {
           window.location.href = '/dashboard';
@@ -364,7 +368,7 @@ const FormLogin: React.FC<{}> = () => {
           <Form>
             <FormControl id='email' isRequired>
               <FormLabel marginBottom={4} htmlFor='email'>
-                E-mail ({state.username})
+                E-mail
               </FormLabel>
               <Input
                 variant='flushed'
@@ -420,6 +424,18 @@ const FormLogin: React.FC<{}> = () => {
 };
 
 const Login: React.FC = () => {
+  const { state, setState } = useContext(AuthContext);
+  const Authenticated: React.FC = () => {
+    return (
+      <div>
+        <Button colorScheme='red'>Sair da conta</Button>
+        <Button>
+          <Link to='/dashboard'>Voltar a plataforma</Link>
+        </Button>
+      </div>
+    );
+  };
+
   return (
     <Container>
       <Wrapper>
@@ -429,11 +445,17 @@ const Login: React.FC = () => {
         </ImageSide>
         <FormSide>
           <Logo src='assets/images/brand/logo.png' />
-          <Title>Entre com sua conta</Title>
+          <Title>
+            {state.isAuth
+              ? `Olá novamente, ${state.userData.username}`
+              : 'Entre com sua conta'}
+          </Title>
           <Paragraph>
-            Tenha acesso a grandes oportunidades de emprego por todo o país!
+            {state.isAuth
+              ? 'Você já está logado na plataforma.'
+              : 'Tenha acesso a grandes oportunidades de emprego por todo o país!'}
           </Paragraph>
-          <FormLogin />
+          {state.isAuth ? <Authenticated /> : <FormLogin />}
         </FormSide>
       </Wrapper>
       <ToastContainer
