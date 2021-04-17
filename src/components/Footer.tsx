@@ -10,8 +10,8 @@ const Footer = () => {
         width: '100%',
         left: 0,
         bottom: 0,
-        padding: 30,
-        paddingLeft: 100,
+        padding: 5,
+        paddingLeft: 5,
         backgroundColor: PALETTES.dark,
         color: '#eee',
       }}>

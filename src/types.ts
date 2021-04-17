@@ -42,6 +42,24 @@ export type Company = {
   updated_at: Date;
 };
 
+export type IJobUser = {
+  id?: number;
+  role_id?: number;
+  company_types_id?: number;
+  username?: string;
+  email?: string;
+  password?: string;
+  cpf?: string;
+  cnpj?: string;
+  access?: number;
+  birthDate?: string;
+  jobsCreated?: number;
+  jobsSigned?: number;
+  status?: number;
+  created_at?: string;
+  updated_at?: string;
+};
+
 export type IJob = {
   id?: number;
   user_id?: number;
@@ -51,5 +69,5 @@ export type IJob = {
   location: string;
   created_at: string;
   updated_at: string;
-  user?: { username: string };
+  user?: IJobUser;
 };

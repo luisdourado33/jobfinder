@@ -22,7 +22,8 @@ const Overview: React.FC<IOverviewProps> = ({ title }) => {
     await api
       .get('/jobs/' + jobId)
       .then((response) => {
-        setJob(response.data);
+        setJob(response.data[0]);
+        console.log(job);
         if (job) {
           window.document.title = `${jobId} - ${job?.title} | Job Finder`;
         }
@@ -51,7 +52,7 @@ const Overview: React.FC<IOverviewProps> = ({ title }) => {
               period={job.period}
               isRemote={true}
               title={job.title}
-              owner='Ártico Tecnologia'
+              owner={job.user?.username}
               subtitle={job.description}
               status={true}
             />

@@ -28,7 +28,7 @@ const Card = styled.div`
   justify-content: flex-start;
   flex-direction: column;
 
-  flex: 1;
+  flex: auto;
   display: flex;
 
   :hover {
@@ -41,7 +41,7 @@ const CardHeader = styled.div`
   align-items: center;
   flex-direction: row;
   justify-content: space-between;
-  flex: 1;
+  flex: auto;
   h1 {
     font-weight: bold;
     display: flex;
@@ -52,7 +52,7 @@ const CardHeader = styled.div`
 const CardContent = styled.div`
   align-items: flex-start;
   justify-content: flex-start;
-  flex: 1;
+  flex: auto;
   display: flex;
   flex-direction: column;
   margin-block: 20px;

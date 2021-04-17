@@ -10,7 +10,7 @@ import {
   Badge,
   Tooltip,
 } from 'rsuite';
-import { Text } from '@chakra-ui/react';
+import { Text, Heading } from '@chakra-ui/react';
 import { IUser } from '../../types';
 import { PALETTES } from '../../theme';
 
@@ -74,9 +74,17 @@ const Navbar: React.FC = () => {
       appearance='inverse'
       style={{ backgroundColor: PALETTES.dark }}>
       <NavbarSuite.Header>
-        <Text textTransform='uppercase' padding='18px 20px'>
-          Job Finder
-        </Text>
+        <Heading size={'md'} padding='18px 20px'>
+          <a href='/dashboard'>
+            <Text
+              bgGradient={`linear(to-l, ${PALETTES.yellowGold},#FFF)`}
+              bgClip='text'
+              fontSize='1xl'
+              fontWeight='bold'>
+              Job Finder
+            </Text>
+          </a>
+        </Heading>
       </NavbarSuite.Header>
       <NavbarSuite.Body>
         <Nav center>

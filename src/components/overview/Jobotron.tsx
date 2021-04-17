@@ -29,7 +29,8 @@ export const Jumbotron = styled.div`
   background-image: url('https://www.transparenttextures.com/patterns/asfalt-dark.png');
   justify-content: center;
   align-items: center;
-  flex: 1;
+  flex: auto;
+  height: 100%;
   display: flex;
 
   h1 {
@@ -51,9 +52,10 @@ export const Jumbotron = styled.div`
 export const JumbotronSeparator = styled.div`
   flex-direction: row-reverse;
   justify-content: space-between;
-  flex: content;
+  flex: auto;
   display: flex;
-  box-shadow: 10px 5px 5px black;
+  align-self: center;
+  height: 100%;
 `;
 
 export const Description = styled.h3`
@@ -156,7 +158,7 @@ const Jobotron: React.FC<IJobotronProps> = (props) => {
             )}
           </InputGroup>
         </div>
-        <div style={{ flex: 1, display: 'flex' }}>
+        <div style={{ flex: 'content', display: 'flex' }}>
           <img width={1000} src='../../images/bg.jpg' />
         </div>
       </JumbotronSeparator>
