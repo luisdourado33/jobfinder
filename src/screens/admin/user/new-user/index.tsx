@@ -178,7 +178,7 @@ const NewUser: React.FC = () => {
                     <Badge colorScheme='messenger' marginBlock={2}>
                       Usuários cadastrados: {users?.length}
                     </Badge>
-                    <Table variant='striped' colorScheme='blue'>
+                    <Table variant='simple' colorScheme='blue'>
                       {/* <TableCaption>Atualizado em:</TableCaption> */}
                       <Thead>
                         <Tr>

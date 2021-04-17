@@ -34,6 +34,30 @@ const Dashboard: React.FC = () => {
       });
   }
 
+  const UserMetrics: React.FC = () => {
+    return (
+      <JumbotronSeparatorContent>
+        <h1>Seja bem vindo(a), {state.userData.username}</h1>
+        <InputGroup>
+          <InputGroupWrap>
+            <Input
+              bgColor={PALETTES.light}
+              colorScheme='linkedin'
+              type='text'
+              placeholder='Ex: Desenvolvedor de Software em Cuiabá'
+            />
+            <Text marginBlock={5} style={{ color: '#FFF' }}>
+              Palavras-chave: <b>Engenharia, Desenvolvimento, RH</b>
+            </Text>
+            <Button colorScheme='blackAlpha' leftIcon={<SearchIcon />}>
+              Procurar
+            </Button>
+          </InputGroupWrap>
+        </InputGroup>
+      </JumbotronSeparatorContent>
+    );
+  };
+
   useEffect(() => {
     window.document.title = 'Plataforma - Job Finder';
     getJobs();
@@ -47,25 +71,29 @@ const Dashboard: React.FC = () => {
       <Content>
         <Jumbotron>
           <JumbotronSeparator>
-            <JumbotronSeparatorContent>
-              <h1>Encontre o seu emprego dos sonhos facilmente conosco!</h1>
-              <InputGroup>
-                <InputGroupWrap>
-                  <Input
-                    bgColor={PALETTES.light}
-                    colorScheme='linkedin'
-                    type='text'
-                    placeholder='Ex: Desenvolvedor de Software em Cuiabá'
-                  />
-                  <Text marginBlock={5} style={{ color: '#FFF' }}>
-                    Palavras-chave: <b>Engenharia, Desenvolvimento, RH</b>
-                  </Text>
-                  <Button colorScheme='blackAlpha' leftIcon={<SearchIcon />}>
-                    Procurar
-                  </Button>
-                </InputGroupWrap>
-              </InputGroup>
-            </JumbotronSeparatorContent>
+            {state.isAuth ? (
+              <UserMetrics />
+            ) : (
+              <JumbotronSeparatorContent>
+                <h1>Encontre o seu emprego dos sonhos facilmente conosco!</h1>
+                <InputGroup>
+                  <InputGroupWrap>
+                    <Input
+                      bgColor={PALETTES.light}
+                      colorScheme='linkedin'
+                      type='text'
+                      placeholder='Ex: Desenvolvedor de Software em Cuiabá'
+                    />
+                    <Text marginBlock={5} style={{ color: '#FFF' }}>
+                      Palavras-chave: <b>Engenharia, Desenvolvimento, RH</b>
+                    </Text>
+                    <Button colorScheme='blackAlpha' leftIcon={<SearchIcon />}>
+                      Procurar
+                    </Button>
+                  </InputGroupWrap>
+                </InputGroup>
+              </JumbotronSeparatorContent>
+            )}
             <ImageWrap>
               <img
                 width={1000}
