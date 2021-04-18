@@ -27,6 +27,7 @@ const Card = styled.div`
   box-shadow: 1px 4px 4px #eee;
   justify-content: flex-start;
   flex-direction: column;
+  cursor: pointer;
 
   flex: auto;
   display: flex;

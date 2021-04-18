@@ -72,16 +72,16 @@ const Navbar: React.FC = () => {
   return (
     <NavbarSuite
       appearance='inverse'
-      style={{ backgroundColor: PALETTES.dark }}>
+      style={{ backgroundColor: PALETTES.dark, paddingInline: 100 }}>
       <NavbarSuite.Header>
         <Heading size={'md'} padding='18px 20px'>
           <a href='/dashboard'>
             <Text
-              bgGradient={`linear(to-l, ${PALETTES.yellowGold},#FFF)`}
+              bgGradient={`linear(to-l, ${PALETTES.yellowGold}, ${PALETTES.yellowGold})`}
               bgClip='text'
               fontSize='1xl'
               fontWeight='bold'>
-              Job Finder
+              Job <b>Finder</b>
             </Text>
           </a>
         </Heading>

@@ -30,7 +30,7 @@ export const Navbar = styled.nav`
 `;
 
 export const Jumbotron = styled.div`
-  background-color: ${PALETTES.yellowGold};
+  background-color: ${'#f8f8f8'};
   /* background-color: #ffffff; */
   background-image: url('https://www.transparenttextures.com/patterns/arches.png');
   justify-content: center;
@@ -69,7 +69,7 @@ export const JumbotronSeparatorContent = styled.div`
   flex-direction: column;
   flex: 1;
   display: flex;
-  padding: 100px;
+  padding: 120px;
   justify-content: center;
   align-content: flex-start;
   align-items: flex-start;
@@ -87,8 +87,9 @@ export const JumbotronSeparatorContent = styled.div`
 `;
 
 export const InputGroupWrap = styled.div`
-  flex-direction: column;
-  flex: auto;
+  flex-direction: row;
+  flex: content;
+  display: contents;
 
   @media (max-width: 768px) {
     flex-direction: column;
