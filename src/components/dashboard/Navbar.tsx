@@ -7,10 +7,9 @@ import {
   Dropdown,
   Whisper,
   Button,
-  Badge,
   Tooltip,
 } from 'rsuite';
-import { Text, Heading } from '@chakra-ui/react';
+import { Text, Heading, Badge } from '@chakra-ui/react';
 import { IUser } from '../../types';
 import { PALETTES } from '../../theme';
 
@@ -113,14 +112,23 @@ const Navbar: React.FC = () => {
               trigger={['click', 'hover']}
             />
           ) : (
-            <Nav.Item
-              style={{ backgroundColor: PALETTES.light }}
-              href='/login'
-              icon={
-                <Icon icon='user' style={{ color: PALETTES.yellowGold }} />
-              }>
-              <b style={{ color: PALETTES.dark }}>Acessar plataforma</b>
-            </Nav.Item>
+            <>
+              <Nav.Item href='/jobs/new-job'>
+                <p>
+                  <b style={{ color: PALETTES.yellowGold }}>
+                    Cadastrar nova vaga
+                  </b>
+                </p>
+              </Nav.Item>
+              <Nav.Item
+                style={{ backgroundColor: PALETTES.light }}
+                href='/login'
+                icon={
+                  <Icon icon='user' style={{ color: PALETTES.yellowGold }} />
+                }>
+                <b style={{ color: PALETTES.dark }}>Acessar plataforma</b>
+              </Nav.Item>
+            </>
           )}
         </Nav>
       </NavbarSuite.Body>

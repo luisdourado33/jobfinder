@@ -211,7 +211,7 @@ const Dashboard: React.FC = () => {
             {/* <Text marginBlock={5} style={{ color: '#FFF' }}>
               Palavras-chave: <b>Engenharia, Desenvolvimento, RH</b>
             </Text> */}
-            <Button colorScheme='blackAlpha' leftIcon={<SearchIcon />}>
+            <Button colorScheme='orange' leftIcon={<SearchIcon />}>
               Procurar
             </Button>
           </InputGroupWrap>
@@ -250,7 +250,7 @@ const Dashboard: React.FC = () => {
                     {/* <Text marginBlock={5} style={{ color: '#FFF' }}>
                       Palavras-chave: <b>Engenharia, Desenvolvimento, RH</b>
                     </Text> */}
-                    <Button colorScheme='blackAlpha' leftIcon={<SearchIcon />}>
+                    <Button colorScheme='orange' leftIcon={<SearchIcon />}>
                       Procurar
                     </Button>
                   </InputGroupWrap>
