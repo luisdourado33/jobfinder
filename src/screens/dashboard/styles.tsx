@@ -30,8 +30,7 @@ export const Navbar = styled.nav`
 `;
 
 export const Jumbotron = styled.div`
-  background-color: ${'#FFF'};
-  /* background-color: #ffffff; */
+  background-color: #ffffff;
   background-image: url('https://www.transparenttextures.com/patterns/arches.png');
   justify-content: center;
   align-items: center;

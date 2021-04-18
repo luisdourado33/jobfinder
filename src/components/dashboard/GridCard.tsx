@@ -6,6 +6,7 @@ import {
   SkeletonCircle,
   SkeletonText,
 } from '@chakra-ui/react';
+
 import JobCard from '../JobCard';
 
 interface IProps {

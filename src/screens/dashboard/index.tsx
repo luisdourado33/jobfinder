@@ -203,6 +203,7 @@ const Dashboard: React.FC = () => {
         <InputGroup>
           <InputGroupWrap>
             <Input
+              mr={1}
               bgColor={PALETTES.light}
               colorScheme='linkedin'
               type='text'
@@ -211,7 +212,7 @@ const Dashboard: React.FC = () => {
             {/* <Text marginBlock={5} style={{ color: '#FFF' }}>
               Palavras-chave: <b>Engenharia, Desenvolvimento, RH</b>
             </Text> */}
-            <Button colorScheme='orange' leftIcon={<SearchIcon />}>
+            <Button colorScheme='green' leftIcon={<SearchIcon />}>
               Procurar
             </Button>
           </InputGroupWrap>

@@ -11,6 +11,7 @@ import {
 } from 'rsuite';
 import { Text, Heading, Badge } from '@chakra-ui/react';
 import { IUser } from '../../types';
+import { Link, Redirect } from 'react-router-dom';
 import { PALETTES } from '../../theme';
 
 import { AuthContext, handleLogoff } from '../../context/AuthContext';
@@ -25,7 +26,7 @@ const UserOptionsDropdown = ({ ...props }) => (
   <Dropdown {...props}>
     <Dropdown.Item
       icon={<Icon icon='cog' style={{ color: PALETTES.yellowGold }} />}>
-      Minhas vagas
+      <Link to='my-jobs'>Minhas vagas</Link>
     </Dropdown.Item>
     <Dropdown.Item
       icon={<Icon icon='cog' style={{ color: PALETTES.yellowGold }} />}>

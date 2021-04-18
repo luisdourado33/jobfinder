@@ -5,6 +5,7 @@ import { AuthProvider } from './context/AuthContext';
 
 import Login from './screens/Login';
 import Dashboard from './screens/dashboard';
+import MyJobs from './screens/dashboard/my-jobs';
 import AdminPanel from './screens/admin';
 
 import Overview from './screens/jobs/Overview';
@@ -56,6 +57,7 @@ const AppRouter: React.FC = () => {
           <Route path='/' exact component={Home} />
           <Route path='/login' component={Login} />
           <Route path='/dashboard' component={Dashboard} />
+          <Route path='/my-jobs' component={MyJobs} />
           <Route path='/admin' component={AdminPanel} />
           <Route path='/jobs/overview/:jobId' component={Overview} />
           <Route path='/jobs/new-job' component={NewJob} />
