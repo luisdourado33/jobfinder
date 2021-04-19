@@ -107,6 +107,11 @@ const Navbar: React.FC = () => {
         <Nav
           pullRight
           style={{ alignItems: 'center', flex: 1, display: 'flex' }}>
+          <Nav.Item href='/jobs/new-job'>
+            <p>
+              <b style={{ color: PALETTES.yellowGold }}>Cadastrar nova vaga</b>
+            </p>
+          </Nav.Item>
           {isAuth ? (
             <UserOptionsDropdown
               title={`Olá, ${state.userData.username}`}
@@ -114,13 +119,6 @@ const Navbar: React.FC = () => {
             />
           ) : (
             <>
-              <Nav.Item href='/jobs/new-job'>
-                <p>
-                  <b style={{ color: PALETTES.yellowGold }}>
-                    Cadastrar nova vaga
-                  </b>
-                </p>
-              </Nav.Item>
               <Nav.Item
                 style={{ backgroundColor: PALETTES.light }}
                 href='/login'

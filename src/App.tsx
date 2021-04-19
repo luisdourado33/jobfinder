@@ -1,7 +1,8 @@
 import * as React from 'react';
+
 import 'rsuite/dist/styles/rsuite-default.css';
-import GlobalStyles from './createGlobalStyles';
 import 'react-toastify/dist/ReactToastify.css';
+import GlobalStyles from './createGlobalStyles';
 
 import { AuthProvider } from './context/AuthContext';
 import { ChakraProvider } from '@chakra-ui/react';

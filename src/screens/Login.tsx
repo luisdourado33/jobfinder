@@ -31,12 +31,8 @@ const Container = styled.div`
   /* background-color: ${PALETTES.dark}; */
   background-color: #ffffff;
   background-image: url('https://www.transparenttextures.com/patterns/connected.png');
-  position: fixed;
-  top: 0;
-  left: 0;
-  bottom: 0;
-  right: 0;
-  overflow: auto;
+  position: relative;
+  margin: 100px;
   justify-content: center;
   display: flex;
 
@@ -67,7 +63,7 @@ const Wrapper = styled.div`
 `;
 
 const ImageSide = styled.div`
-  background-color: ${PALETTES.yellowGold};
+  /* background-color: ${PALETTES.yellowGold}; */
   /* background-image: url('images/bg.jpg'); */
   /* background-image: url('https://www.transparenttextures.com/patterns/blizzard.png'); */
   background-position: center;
@@ -409,7 +405,6 @@ const FormLogin: React.FC<{}> = () => {
                 type='submit'
                 isLoading={isLoading}
                 leftIcon={<ArrowForwardIcon />}
-                borderWidth={1}
                 backgroundColor={PALETTES.yellowGold}
                 color={PALETTES.dark}
                 variant='solid'>
