@@ -13,10 +13,16 @@ import {
   Nav,
   Sidenav,
   Icon,
+  Panel,
 } from 'rsuite';
 import {
   Heading,
   SimpleGrid,
+  Tabs,
+  TabList,
+  Tab,
+  TabPanels,
+  TabPanel,
   Table,
   TableCaption,
   Thead,
@@ -99,199 +105,120 @@ const MyJobs: React.FC = () => {
                     icon={<Icon icon='dashboard' />}>
                     <Link to='/admin'>Minhas vagas</Link>
                   </Nav.Item>
-                  <Nav.Item
-                    onSelect={() => handleChangePage('1')}
-                    eventKey='1'
-                    icon={<Icon icon='dashboard' />}>
-                    <Link to='/admin'>Minhas vagas</Link>
-                  </Nav.Item>
-                  <Nav.Item
-                    onSelect={() => handleChangePage('1')}
-                    eventKey='1'
-                    icon={<Icon icon='dashboard' />}>
-                    <Link to='/admin'>Minhas vagas</Link>
-                  </Nav.Item>
-                  <Nav.Item
-                    onSelect={() => handleChangePage('1')}
-                    eventKey='1'
-                    icon={<Icon icon='dashboard' />}>
-                    <Link to='/admin'>Minhas vagas</Link>
-                  </Nav.Item>
-                  <Nav.Item
-                    onSelect={() => handleChangePage('1')}
-                    eventKey='1'
-                    icon={<Icon icon='dashboard' />}>
-                    <Link to='/admin'>Minhas vagas</Link>
-                  </Nav.Item>
-                  <Nav.Item
-                    onSelect={() => handleChangePage('1')}
-                    eventKey='1'
-                    icon={<Icon icon='dashboard' />}>
-                    <Link to='/admin'>Minhas vagas</Link>
-                  </Nav.Item>
-                  <Nav.Item
-                    onSelect={() => handleChangePage('1')}
-                    eventKey='1'
-                    icon={<Icon icon='dashboard' />}>
-                    <Link to='/admin'>Minhas vagas</Link>
-                  </Nav.Item>
-                  <Nav.Item
-                    onSelect={() => handleChangePage('1')}
-                    eventKey='1'
-                    icon={<Icon icon='dashboard' />}>
-                    <Link to='/admin'>Minhas vagas</Link>
-                  </Nav.Item>
-                  <Nav.Item
-                    onSelect={() => handleChangePage('1')}
-                    eventKey='1'
-                    icon={<Icon icon='dashboard' />}>
-                    <Link to='/admin'>Minhas vagas</Link>
-                  </Nav.Item>
                 </Nav>
               </Sidenav.Body>
             </Sidenav>
           </Sidebar>
           <Container>
             <Header>
-              <Heading bgColor='#EEE' size='sm' padding={5}>
+              <Heading bgColor='#FFF' size='lg' padding={5}>
                 Visão geral
               </Heading>
             </Header>
-            <Content style={{ padding: 20 }}>
-              <Table variant='striped' colorScheme='linkedin'>
-                <TableCaption>
-                  Imperial to metric conversion factors
-                </TableCaption>
-                <Thead>
-                  <Tr>
-                    <Th>Módulo</Th>
-                    <Th>Valor</Th>
-                    <Th isNumeric></Th>
-                  </Tr>
-                </Thead>
-                <Tbody>
-                  <Tr>
-                    <Td>
-                      <b>Vagas aplicadas</b>
-                    </Td>
-                    <Td>millimetres (mm)</Td>
-                    <Td isNumeric>25.4</Td>
-                  </Tr>
-                  <Tr>
-                    <Td>feet</Td>
-                    <Td>centimetres (cm)</Td>
-                    <Td isNumeric>30.48</Td>
-                  </Tr>
-                  <Tr>
-                    <Td>yards</Td>
-                    <Td>metres (m)</Td>
-                    <Td isNumeric>0.91444</Td>
-                  </Tr>
-                </Tbody>
-                <Tfoot>
-                  <Tr>
-                    <Th>To convert</Th>
-                    <Th>into</Th>
-                    <Th isNumeric>multiply by</Th>
-                  </Tr>
-                </Tfoot>
-              </Table>
-              <div
-                style={{
-                  paddingInline: 5,
-                  flexDirection: 'row',
-                  flex: 1,
-                  display: 'flex',
-                  justifyContent: 'space-between',
-                }}>
-                <Heading size='sm' padding={5}>
-                  Minhas vagas
+            <Content style={{ padding: 20, backgroundColor: '#FAFAFA' }}>
+              <Panel>
+                <Heading size='lg' padding={5}>
+                  Visão geral
                 </Heading>
-                <Button size='sm' onClick={handleToggle} mt='1rem'>
-                  Ver {show ? 'menos' : 'mais'}
-                </Button>
-              </div>
-
-              <Collapse startingHeight={1} in={show}>
-                <SimpleGrid
-                  style={{
-                    flex: 1,
-                    overflow: 'scroll',
-                  }}
-                  columns={3}
-                  spacing={5}>
-                  <JobCard
-                    key={1}
-                    id={1}
-                    title={'job.title'}
-                    description={'job.description'}
-                    period={'job.period'}
-                    createdAt={'job.created_at'}
-                    owner={'job.user?.username'}
-                    location={'job.location'}
-                  />
-                  <JobCard
-                    key={1}
-                    id={1}
-                    title={'job.title'}
-                    description={'job.description'}
-                    period={'job.period'}
-                    createdAt={'job.created_at'}
-                    owner={'job.user?.username'}
-                    location={'job.location'}
-                  />
-                </SimpleGrid>
-              </Collapse>
-              <div
-                style={{
-                  paddingInline: 5,
-                  flexDirection: 'row',
-                  flex: 1,
-                  display: 'flex',
-                  justifyContent: 'space-between',
-                }}>
-                <Heading size='sm' padding={5}>
-                  Vagas aplicadas
+                <Table variant='striped' colorScheme='cyan'>
+                  <Thead>
+                    <Tr>
+                      <Th>Módulo</Th>
+                      <Th isNumeric>Quantidade</Th>
+                    </Tr>
+                  </Thead>
+                  <Tbody>
+                    <Tr key={1}>
+                      <Td>
+                        <b>Vagas pendentes</b>
+                      </Td>
+                      <Td isNumeric>10</Td>
+                    </Tr>
+                    <Tr key={2}>
+                      <Td>
+                        <b>Vagas criadas por mim</b>
+                      </Td>
+                      <Td isNumeric>25.4</Td>
+                    </Tr>
+                  </Tbody>
+                </Table>
+              </Panel>
+              <Panel>
+                <Heading size='lg' padding={5}>
+                  Vagas
                 </Heading>
-                <Button size='sm' onClick={handleToggle} mt='1rem'>
-                  Ver {show ? 'menos' : 'mais'}
-                </Button>
-              </div>
+                <Tabs>
+                  <TabList>
+                    <Tab>Vagas pendentes</Tab>
+                    <Tab>Cadastradas por mim</Tab>
+                  </TabList>
 
-              <Collapse startingHeight={1} in={show}>
-                <SimpleGrid
-                  style={{
-                    flex: 1,
-                    overflow: 'scroll',
-                  }}
-                  columns={3}
-                  spacing={5}>
-                  <JobCard
-                    key={1}
-                    id={1}
-                    title={'job.title'}
-                    description={'job.description'}
-                    period={'job.period'}
-                    createdAt={'job.created_at'}
-                    owner={'job.user?.username'}
-                    location={'job.location'}
-                  />
-                  <JobCard
-                    key={1}
-                    id={1}
-                    title={'job.title'}
-                    description={'job.description'}
-                    period={'job.period'}
-                    createdAt={'job.created_at'}
-                    owner={'job.user?.username'}
-                    location={'job.location'}
-                  />
-                </SimpleGrid>
-              </Collapse>
+                  <TabPanels>
+                    <TabPanel>
+                      <SimpleGrid columns={3} spacing={5}>
+                        <JobCard
+                          key={1}
+                          id={1}
+                          title={'job.title'}
+                          description={'job.description'}
+                          period={'job.period'}
+                          createdAt={'job.created_at'}
+                          owner={'job.user?.username'}
+                          location={'job.location'}
+                        />
+                        <JobCard
+                          key={1}
+                          id={1}
+                          title={'job.title'}
+                          description={'job.description'}
+                          period={'job.period'}
+                          createdAt={'job.created_at'}
+                          owner={'job.user?.username'}
+                          location={'job.location'}
+                        />
+                      </SimpleGrid>
+                    </TabPanel>
+                    <TabPanel>
+                      <SimpleGrid columns={3} spacing={5}>
+                        <JobCard
+                          key={1}
+                          id={1}
+                          title={'job.title'}
+                          description={'job.description'}
+                          period={'job.period'}
+                          createdAt={'job.created_at'}
+                          owner={'job.user?.username'}
+                          location={'job.location'}
+                        />
+                        <JobCard
+                          key={1}
+                          id={1}
+                          title={'job.title'}
+                          description={'job.description'}
+                          period={'job.period'}
+                          createdAt={'job.created_at'}
+                          owner={'job.user?.username'}
+                          location={'job.location'}
+                        />
+                        <JobCard
+                          key={1}
+                          id={1}
+                          title={'job.title'}
+                          description={'job.description'}
+                          period={'job.period'}
+                          createdAt={'job.created_at'}
+                          owner={'job.user?.username'}
+                          location={'job.location'}
+                        />
+                      </SimpleGrid>
+                    </TabPanel>
+                  </TabPanels>
+                </Tabs>
+              </Panel>
             </Content>
           </Container>
         </Container>
-        {/* <Footer /> */}
+        <Footer />
       </Content>
     </Container>
   );
