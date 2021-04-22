@@ -172,12 +172,12 @@ const MyJobs: React.FC = () => {
                         <Th>Nº</Th>
                         <Th>Vaga</Th>
                         <Th>Período</Th>
-                        <Th>Data de Publicação</Th>
-                        <Th>Criador</Th>
+                        <Th>Local</Th>
+                        <Th>Status</Th>
                       </Tr>
                     </Thead>
                     <Tbody>
-                      {jobs?.map((job) => (
+                      {jobs?.map((job: IJob) => (
                         <Tr>
                           <Td>
                             <Badge
@@ -197,8 +197,14 @@ const MyJobs: React.FC = () => {
                             </Tooltip>
                           </Td>
                           <Td>{job.period}</Td>
-                          <Td>{job.created_at}</Td>
-                          <Td>{job.user?.username}</Td>
+                          <Td>{job.location}</Td>
+                          <Td>
+                            {job.status == 1 ? (
+                              <Badge colorScheme='green'>Ativo</Badge>
+                            ) : (
+                              'Inativo'
+                            )}
+                          </Td>
                         </Tr>
                       ))}
                     </Tbody>
@@ -241,7 +247,7 @@ const MyJobs: React.FC = () => {
                         <Th>Vaga</Th>
                         <Th>Período</Th>
                         <Th>Data de Publicação</Th>
-                        <Th>Criador</Th>
+                        <Th>Status</Th>
                       </Tr>
                     </Thead>
                     <Tbody>
@@ -266,7 +272,13 @@ const MyJobs: React.FC = () => {
                           </Td>
                           <Td>{job.period}</Td>
                           <Td>{job.created_at}</Td>
-                          <Td>{job.user?.username}</Td>
+                          <Td>
+                            {job.status == 1 ? (
+                              <Badge colorScheme='green'>Ativo</Badge>
+                            ) : (
+                              <Badge colorScheme='red'>Inativo</Badge>
+                            )}
+                          </Td>
                         </Tr>
                       ))}
                     </Tbody>

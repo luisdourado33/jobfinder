@@ -60,40 +60,41 @@ export const Description = styled.h3`
   margin-block: 10px;
 `;
 
-async function applyJob(user_id: any, job_id: any) {
-  await api
-    .post('/jobs/jobApply', {
-      user_id,
-      job_id,
-    })
-    .then((success) => {
-      toast.success(`Aplicação realizada com sucesso!`, {
-        position: 'top-right',
-        autoClose: 5000,
-        hideProgressBar: false,
-        closeOnClick: true,
-        pauseOnHover: true,
-        draggable: true,
-        progress: undefined,
-      });
-    })
-    .catch((err) => {
-      toast.error(`Houve um erro ao realizar a aplicação.\n${err}`, {
-        position: 'top-right',
-        autoClose: 5000,
-        hideProgressBar: false,
-        closeOnClick: true,
-        pauseOnHover: true,
-        draggable: true,
-        progress: undefined,
-      });
-    });
-}
-
 const Jobotron: React.FC<IJobotronProps> = (props) => {
   const { state } = useContext(AuthContext);
   const [jobsSigned, setJobsSigned] = useState<IJob>();
   const [alreadySigned, setAlreadySigned] = useState<boolean>(false);
+
+  async function applyJob(user_id: any, job_id: any) {
+    await api
+      .post('/jobs/jobApply', {
+        user_id,
+        job_id,
+      })
+      .then((success) => {
+        setAlreadySigned(true);
+        toast.success(`Aplicação realizada com sucesso!`, {
+          position: 'top-right',
+          autoClose: 5000,
+          hideProgressBar: false,
+          closeOnClick: true,
+          pauseOnHover: true,
+          draggable: true,
+          progress: undefined,
+        });
+      })
+      .catch((err) => {
+        toast.error(`Houve um erro ao realizar a aplicação.\n${err}`, {
+          position: 'top-right',
+          autoClose: 5000,
+          hideProgressBar: false,
+          closeOnClick: true,
+          pauseOnHover: true,
+          draggable: true,
+          progress: undefined,
+        });
+      });
+  }
 
   useEffect(() => {
     (async () => {

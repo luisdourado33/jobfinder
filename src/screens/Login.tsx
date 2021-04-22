@@ -259,7 +259,6 @@ const FormLogin: React.FC<{}> = () => {
                       <FormLabel marginBottom={4} htmlFor='date'>
                         Data de Nascimento
                       </FormLabel>
-                      <h1>{props.values.birthDate}</h1>
                       <Input
                         onChange={props.handleChange('birthDate')}
                         id='birthDate'
