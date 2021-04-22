@@ -1,16 +1,13 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import styled from 'styled-components';
+import api from '../../services/api';
 import { PALETTES } from '../../theme';
-import { Container, Header, Content, Footer, Message } from 'rsuite';
-import {
-  Input,
-  InputGroup,
-  InputLeftElement,
-  Button,
-  Badge,
-} from '@chakra-ui/react';
+import { Message } from 'rsuite';
 import { FaClipboardCheck } from 'react-icons/fa';
+import { InputGroup, Button, Badge } from '@chakra-ui/react';
+import { ToastContainer, toast } from 'react-toastify';
 
+import { AuthContext } from '../../context/AuthContext';
 interface IJobotronProps {
   title: string;
   subtitle: string;
@@ -25,7 +22,6 @@ interface IJobotronProps {
 
 export const Jumbotron = styled.div`
   background-color: ${PALETTES.light};
-  /* background-color: #ffffff; */
   background-image: url('https://www.transparenttextures.com/patterns/asfalt-dark.png');
   justify-content: center;
   align-items: center;
@@ -63,7 +59,39 @@ export const Description = styled.h3`
   margin-block: 10px;
 `;
 
+async function applyJob(user_id: any, job_id: any) {
+  await api
+    .post('/jobs/jobApply', {
+      user_id,
+      job_id,
+    })
+    .then((success) => {
+      toast.success(`Aplicação realizada com sucesso!`, {
+        position: 'top-right',
+        autoClose: 5000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+      });
+    })
+    .catch((err) => {
+      toast.error(`Houve um erro ao realizar a aplicação.`, {
+        position: 'top-right',
+        autoClose: 5000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+      });
+    });
+}
+
 const Jobotron: React.FC<IJobotronProps> = (props) => {
+  const { state } = useContext(AuthContext);
+
   return (
     <Jumbotron>
       <JumbotronSeparator>
@@ -140,20 +168,13 @@ const Jobotron: React.FC<IJobotronProps> = (props) => {
           </div>
 
           <InputGroup mt={10}>
-            {props.status ? (
+            {props.status && state.isAuth && (
               <Button
+                onClick={() => applyJob(state.userData.id, props.jobId)}
                 colorScheme='green'
                 leftIcon={<FaClipboardCheck />}
                 ml={1}>
                 Quero me candidatar a vaga
-              </Button>
-            ) : (
-              <Button
-                disabled
-                colorScheme='red'
-                leftIcon={<FaClipboardCheck />}
-                ml={1}>
-                Inscrições encerradas
               </Button>
             )}
           </InputGroup>
@@ -162,6 +183,18 @@ const Jobotron: React.FC<IJobotronProps> = (props) => {
           <img width={1000} src='../../images/bg.jpg' />
         </div>
       </JumbotronSeparator>
+      <ToastContainer
+        position='top-right'
+        autoClose={5000}
+        hideProgressBar={false}
+        newestOnTop={false}
+        closeOnClick
+        rtl={false}
+        pauseOnFocusLoss
+        draggable
+        pauseOnHover
+      />
+      <ToastContainer />
     </Jumbotron>
   );
 };

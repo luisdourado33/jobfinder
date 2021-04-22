@@ -26,7 +26,7 @@ const UserOptionsDropdown = ({ ...props }) => (
   <Dropdown {...props}>
     <Dropdown.Item
       icon={<Icon icon='cog' style={{ color: PALETTES.yellowGold }} />}>
-      <Link to='my-jobs'>Minhas vagas</Link>
+      <Link to='/my-jobs'>Minhas vagas</Link>
     </Dropdown.Item>
     <Dropdown.Item
       icon={<Icon icon='cog' style={{ color: PALETTES.yellowGold }} />}>

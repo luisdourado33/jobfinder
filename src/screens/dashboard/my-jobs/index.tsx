@@ -1,10 +1,9 @@
-import React, { useState, useEffect, useContext } from 'react';
+import React, { useState, useEffect, useContext, useCallback } from 'react';
 import api from '../../../services/api';
 import styled from 'styled-components';
 import { AuthContext } from '../../../context/AuthContext';
 import { PALETTES } from '../../../theme';
 import { IJob } from '../../../types';
-import { Link } from 'react-router-dom';
 import {
   Container,
   Header,
@@ -13,33 +12,28 @@ import {
   Nav,
   Sidenav,
   Icon,
+  Dropdown,
   Panel,
 } from 'rsuite';
 import {
   Heading,
-  SimpleGrid,
-  Tabs,
-  TabList,
-  Tab,
-  TabPanels,
-  TabPanel,
+  Grid,
   Table,
   TableCaption,
   Thead,
   Tr,
-  Td,
   Th,
+  Td,
   Tbody,
   Tfoot,
-  Collapse,
+  Badge,
   Button,
+  Collapse,
+  Tooltip,
 } from '@chakra-ui/react';
 
 import Navbar from '../../../components/dashboard/Navbar';
-import Section from '../../../components/Section';
-import GridCard from '../../../components/dashboard/GridCard';
-import JobCard from '../../../components/JobCard';
-import Footer from '../../../components/Footer';
+import InfoBox from '../../../components/InfoBox';
 
 const CardJob = styled.div`
   background-color: #fff;
@@ -64,29 +58,43 @@ const CardJob = styled.div`
 `;
 
 const MyJobs: React.FC = () => {
+  const { state } = useContext(AuthContext);
   const [active, setActive] = useState('1');
   const [jobs, setJobs] = useState<IJob[]>();
-  const { state } = useContext(AuthContext);
+  const [myJobs, setMyJobs] = useState<IJob[]>();
   const [show, setShow] = React.useState(false);
+  const [showJobs, setShowJobs] = useState<boolean>(false);
+  const [showMyJobs, setShowMyJobs] = useState<boolean>(false);
 
   const handleToggle = () => setShow(!show);
-  async function getJobs() {
-    await api
-      .get('jobs')
-      .then((response) => {
-        setJobs(response.data);
-      })
-      .catch((error) => {
-        console.log('Houve um erro ao carregar os jobs.\n' + error);
-      });
-  }
+
   function handleChangePage(pageActive: string) {
     setActive(pageActive);
   }
 
   useEffect(() => {
-    getJobs();
-  }, [jobs]);
+    (async () => {
+      await api
+        .get(`jobs/jobApply/${state.userData.id}`)
+        .then((response) => {
+          setJobs(response.data);
+        })
+        .catch((error) => {
+          console.log('Houve um erro ao carregar os jobs.\n' + error);
+        });
+
+      await api
+        .post('jobs/userJobs', {
+          userId: state.userData.id,
+        })
+        .then((response) => {
+          setMyJobs(response.data);
+        })
+        .catch((error) => {
+          console.log('Houve um erro ao carregar os jobs.\n' + error);
+        });
+    })();
+  }, []);
 
   return (
     <Container>
@@ -96,14 +104,11 @@ const MyJobs: React.FC = () => {
       <Content>
         <Container>
           <Sidebar>
-            <Sidenav activeKey={active}>
+            <Sidenav appearance='default' activeKey='1'>
               <Sidenav.Body>
                 <Nav>
-                  <Nav.Item
-                    onSelect={() => handleChangePage('1')}
-                    eventKey='1'
-                    icon={<Icon icon='dashboard' />}>
-                    <Link to='/admin'>Minhas vagas</Link>
+                  <Nav.Item eventKey='1' icon={<Icon icon='dashboard' />}>
+                    Visão geral
                   </Nav.Item>
                 </Nav>
               </Sidenav.Body>
@@ -111,114 +116,165 @@ const MyJobs: React.FC = () => {
           </Sidebar>
           <Container>
             <Header>
-              <Heading bgColor='#FFF' size='lg' padding={5}>
+              <Heading size='md' p={15}>
                 Visão geral
               </Heading>
             </Header>
-            <Content style={{ padding: 20, backgroundColor: '#FAFAFA' }}>
-              <Panel>
-                <Heading size='lg' padding={5}>
-                  Visão geral
-                </Heading>
-                <Table variant='striped' colorScheme='cyan'>
-                  <Thead>
-                    <Tr>
-                      <Th>Módulo</Th>
-                      <Th isNumeric>Quantidade</Th>
-                    </Tr>
-                  </Thead>
-                  <Tbody>
-                    <Tr key={1}>
-                      <Td>
-                        <b>Vagas pendentes</b>
-                      </Td>
-                      <Td isNumeric>10</Td>
-                    </Tr>
-                    <Tr key={2}>
-                      <Td>
-                        <b>Vagas criadas por mim</b>
-                      </Td>
-                      <Td isNumeric>25.4</Td>
-                    </Tr>
-                  </Tbody>
-                </Table>
+            <Content style={{ padding: 15 }}>
+              <Grid templateColumns='repeat(5, 1fr)' gap={2} mb={5}>
+                <InfoBox
+                  title={'Vagas em Interesse'}
+                  value={jobs?.length}
+                  bgColor={PALETTES.yellowGold}
+                  textColor={PALETTES.dark}
+                />
+                <InfoBox
+                  title={'Vagas publicadas'}
+                  value={myJobs?.length}
+                  bgColor={PALETTES.dark}
+                  textColor={PALETTES.light}
+                />
+              </Grid>
+              <Panel bordered>
+                <div
+                  style={{
+                    alignItems: 'center',
+                    flexDirection: 'row',
+                    flex: 1,
+                    display: 'flex',
+                    justifyContent: 'space-between',
+                  }}>
+                  <div
+                    style={{
+                      flexDirection: 'row',
+                      flex: 1,
+                      display: 'flex',
+                      alignItems: 'center',
+                      alignContent: 'center',
+                    }}>
+                    <Badge variant='outline' mr={2}>
+                      {jobs?.length}
+                    </Badge>
+                    <Heading size='md'>Vagas em Interesse</Heading>
+                  </div>
+                  <Button
+                    onClick={() => setShowJobs((prevState) => !prevState)}>
+                    {showJobs ? 'Ocultar' : 'Mostrar'}
+                  </Button>
+                </div>
+                <Collapse in={showJobs} animateOpacity>
+                  <Table variant='striped' colorScheme='blackAlpha'>
+                    <TableCaption>Itens atualizados diariamente</TableCaption>
+                    <Thead>
+                      <Tr>
+                        <Th>Nº</Th>
+                        <Th>Vaga</Th>
+                        <Th>Período</Th>
+                        <Th>Data de Publicação</Th>
+                        <Th>Criador</Th>
+                      </Tr>
+                    </Thead>
+                    <Tbody>
+                      {jobs?.map((job) => (
+                        <Tr>
+                          <Td>
+                            <Badge
+                              borderRadius={5}
+                              backgroundColor={PALETTES.yellowGold}>
+                              {job.id && job.id < 10 && `0${job.id}`}
+                              {job.id && job.id >= 10 && `${job.id}`}
+                            </Badge>
+                          </Td>
+                          <Td>
+                            <Tooltip
+                              label={job.description}
+                              aria-label='A tooltip'>
+                              <a href={`jobs/overview/${job.id}`}>
+                                <strong>{job.title}</strong>
+                              </a>
+                            </Tooltip>
+                          </Td>
+                          <Td>{job.period}</Td>
+                          <Td>{job.created_at}</Td>
+                          <Td>{job.user?.username}</Td>
+                        </Tr>
+                      ))}
+                    </Tbody>
+                  </Table>
+                </Collapse>
               </Panel>
-              <Panel>
-                <Heading size='lg' padding={5}>
-                  Vagas
-                </Heading>
-                <Tabs>
-                  <TabList>
-                    <Tab>Vagas pendentes</Tab>
-                    <Tab>Cadastradas por mim</Tab>
-                  </TabList>
-
-                  <TabPanels>
-                    <TabPanel>
-                      <SimpleGrid columns={3} spacing={5}>
-                        <JobCard
-                          key={1}
-                          id={1}
-                          title={'job.title'}
-                          description={'job.description'}
-                          period={'job.period'}
-                          createdAt={'job.created_at'}
-                          owner={'job.user?.username'}
-                          location={'job.location'}
-                        />
-                        <JobCard
-                          key={1}
-                          id={1}
-                          title={'job.title'}
-                          description={'job.description'}
-                          period={'job.period'}
-                          createdAt={'job.created_at'}
-                          owner={'job.user?.username'}
-                          location={'job.location'}
-                        />
-                      </SimpleGrid>
-                    </TabPanel>
-                    <TabPanel>
-                      <SimpleGrid columns={3} spacing={5}>
-                        <JobCard
-                          key={1}
-                          id={1}
-                          title={'job.title'}
-                          description={'job.description'}
-                          period={'job.period'}
-                          createdAt={'job.created_at'}
-                          owner={'job.user?.username'}
-                          location={'job.location'}
-                        />
-                        <JobCard
-                          key={1}
-                          id={1}
-                          title={'job.title'}
-                          description={'job.description'}
-                          period={'job.period'}
-                          createdAt={'job.created_at'}
-                          owner={'job.user?.username'}
-                          location={'job.location'}
-                        />
-                        <JobCard
-                          key={1}
-                          id={1}
-                          title={'job.title'}
-                          description={'job.description'}
-                          period={'job.period'}
-                          createdAt={'job.created_at'}
-                          owner={'job.user?.username'}
-                          location={'job.location'}
-                        />
-                      </SimpleGrid>
-                    </TabPanel>
-                  </TabPanels>
-                </Tabs>
+              <Panel style={{ marginTop: 5 }} bordered>
+                <div
+                  style={{
+                    alignItems: 'center',
+                    flexDirection: 'row',
+                    flex: 1,
+                    display: 'flex',
+                    justifyContent: 'space-between',
+                  }}>
+                  <div
+                    style={{
+                      flexDirection: 'row',
+                      flex: 1,
+                      display: 'flex',
+                      alignItems: 'center',
+                      alignContent: 'center',
+                    }}>
+                    <Badge variant='outline' mr={2}>
+                      {myJobs?.length}
+                    </Badge>
+                    <Heading size='md'>Minhas publicações</Heading>
+                  </div>
+                  <Button
+                    onClick={() => setShowMyJobs((prevState) => !prevState)}>
+                    {showMyJobs ? 'Ocultar' : 'Mostrar'}
+                  </Button>
+                </div>
+                <Collapse in={showMyJobs} animateOpacity>
+                  <Table variant='striped' colorScheme='blackAlpha'>
+                    <TableCaption>Itens atualizados diariamente</TableCaption>
+                    <Thead>
+                      <Tr>
+                        <Th>Nº</Th>
+                        <Th>Vaga</Th>
+                        <Th>Período</Th>
+                        <Th>Data de Publicação</Th>
+                        <Th>Criador</Th>
+                      </Tr>
+                    </Thead>
+                    <Tbody>
+                      {myJobs?.map((job) => (
+                        <Tr>
+                          <Td>
+                            <Badge
+                              borderRadius={20}
+                              backgroundColor={PALETTES.yellowGold}>
+                              {job.id && job.id < 10 && `0${job.id}`}
+                              {job.id && job.id >= 10 && `${job.id}`}
+                            </Badge>
+                          </Td>
+                          <Td>
+                            <Tooltip
+                              label={job.description}
+                              aria-label='A tooltip'>
+                              <a href={`jobs/overview/${job.id}`}>
+                                <strong>{job.title}</strong>
+                              </a>
+                            </Tooltip>
+                          </Td>
+                          <Td>{job.period}</Td>
+                          <Td>{job.created_at}</Td>
+                          <Td>{job.user?.username}</Td>
+                        </Tr>
+                      ))}
+                    </Tbody>
+                  </Table>
+                </Collapse>
               </Panel>
             </Content>
           </Container>
         </Container>
-        <Footer />
+        {/* <Footer /> */}
       </Content>
     </Container>
   );
