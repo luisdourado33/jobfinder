@@ -107,7 +107,7 @@ const NewUser: React.FC = () => {
       title: 'Confirmar remoção de usuário',
       text: 'A ação não pode ser revertida. Apagar mesmo assim?',
       icon: 'warning',
-      buttons: true,
+      buttons: [true, 'Prosseguir!'],
       dangerMode: true,
     }).then(async (willDelete) => {
       if (willDelete) {

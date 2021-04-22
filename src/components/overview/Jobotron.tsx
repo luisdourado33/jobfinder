@@ -1,7 +1,8 @@
-import React, { useContext } from 'react';
+import React, { useState, useEffect, useContext } from 'react';
 import styled from 'styled-components';
 import api from '../../services/api';
 import { PALETTES } from '../../theme';
+import { IJob } from '../../types';
 import { Message } from 'rsuite';
 import { FaClipboardCheck } from 'react-icons/fa';
 import { InputGroup, Button, Badge } from '@chakra-ui/react';
@@ -77,7 +78,7 @@ async function applyJob(user_id: any, job_id: any) {
       });
     })
     .catch((err) => {
-      toast.error(`Houve um erro ao realizar a aplicação.`, {
+      toast.error(`Houve um erro ao realizar a aplicação.\n${err}`, {
         position: 'top-right',
         autoClose: 5000,
         hideProgressBar: false,
@@ -91,6 +92,28 @@ async function applyJob(user_id: any, job_id: any) {
 
 const Jobotron: React.FC<IJobotronProps> = (props) => {
   const { state } = useContext(AuthContext);
+  const [jobsSigned, setJobsSigned] = useState<IJob>();
+  const [alreadySigned, setAlreadySigned] = useState<boolean>(false);
+
+  useEffect(() => {
+    (async () => {
+      await api
+        .get(`jobs/jobApply/${state?.userData.id}`)
+        .then((res) => {
+          res.data.map((jobLoop: IJob) => {
+            if (jobLoop.job_id == props.jobId) {
+              // alert('Já inscrito: ' + jobLoop.id);
+              setAlreadySigned(true);
+            } else {
+              // alert(jobLoop.job_id);
+            }
+          });
+        })
+        .catch((err) => {
+          console.log('Houve um erro ao requisitar os jobs.');
+        });
+    })();
+  }, [state, props.jobId]);
 
   return (
     <Jumbotron>
@@ -168,13 +191,22 @@ const Jobotron: React.FC<IJobotronProps> = (props) => {
           </div>
 
           <InputGroup mt={10}>
-            {props.status && state.isAuth && (
+            {!alreadySigned ? (
               <Button
-                onClick={() => applyJob(state.userData.id, props.jobId)}
+                onClick={() => applyJob(state?.userData.id, props.jobId)}
                 colorScheme='green'
                 leftIcon={<FaClipboardCheck />}
                 ml={1}>
                 Quero me candidatar a vaga
+              </Button>
+            ) : (
+              <Button
+                disabled
+                onClick={() => applyJob(state?.userData.id, props.jobId)}
+                colorScheme='green'
+                leftIcon={<FaClipboardCheck />}
+                ml={1}>
+                Você já está inscrito nesta vaga.
               </Button>
             )}
           </InputGroup>

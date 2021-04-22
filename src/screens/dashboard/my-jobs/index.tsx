@@ -74,27 +74,29 @@ const MyJobs: React.FC = () => {
 
   useEffect(() => {
     (async () => {
-      await api
-        .get(`jobs/jobApply/${state.userData.id}`)
-        .then((response) => {
-          setJobs(response.data);
-        })
-        .catch((error) => {
-          console.log('Houve um erro ao carregar os jobs.\n' + error);
-        });
+      if (state.userData.id) {
+        await api
+          .get(`jobs/jobApply/${state?.userData.id}`)
+          .then((response) => {
+            setJobs(response?.data);
+          })
+          .catch((error) => {
+            console.log('Houve um erro ao carregar os jobs.\n' + error);
+          });
 
-      await api
-        .post('jobs/userJobs', {
-          userId: state.userData.id,
-        })
-        .then((response) => {
-          setMyJobs(response.data);
-        })
-        .catch((error) => {
-          console.log('Houve um erro ao carregar os jobs.\n' + error);
-        });
+        await api
+          .post('jobs/userJobs', {
+            userId: state?.userData.id,
+          })
+          .then((response) => {
+            setMyJobs(response?.data);
+          })
+          .catch((error) => {
+            console.log('Houve um erro ao carregar os jobs.\n' + error);
+          });
+      }
     })();
-  }, []);
+  }, [state]);
 
   return (
     <Container>
@@ -124,13 +126,13 @@ const MyJobs: React.FC = () => {
               <Grid templateColumns='repeat(5, 1fr)' gap={2} mb={5}>
                 <InfoBox
                   title={'Vagas em Interesse'}
-                  value={jobs?.length}
+                  value={!jobs?.length ? 0 : jobs?.length}
                   bgColor={PALETTES.yellowGold}
                   textColor={PALETTES.dark}
                 />
                 <InfoBox
                   title={'Vagas publicadas'}
-                  value={myJobs?.length}
+                  value={myJobs?.length == 0 ? 0 : myJobs?.length}
                   bgColor={PALETTES.dark}
                   textColor={PALETTES.light}
                 />
@@ -153,7 +155,7 @@ const MyJobs: React.FC = () => {
                       alignContent: 'center',
                     }}>
                     <Badge variant='outline' mr={2}>
-                      {jobs?.length}
+                      {!jobs?.length ? 0 : jobs?.length}
                     </Badge>
                     <Heading size='md'>Vagas em Interesse</Heading>
                   </div>

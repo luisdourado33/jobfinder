@@ -4,7 +4,7 @@ export interface IFormValues {
   rememberCredentials: boolean;
 }
 export interface IFormNewJob {
-  user_id: number;
+  user_id: any;
   title: string;
   description: string;
   period: string;
@@ -62,6 +62,7 @@ export type IJobUser = {
 
 export type IJob = {
   id?: number;
+  job_id?: number;
   user_id?: number;
   title: string;
   description: string;

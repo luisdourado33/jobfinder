@@ -29,7 +29,7 @@ const Container = styled.div<IContainerProps>`
   width: auto;
   height: auto;
   background-color: ${(props) => props.bgColor || '#333'};
-  background-image: url('https://www.transparenttextures.com/patterns/asfalt-dark.png');
+  /* background-image: url('https://www.transparenttextures.com/patterns/asfalt-dark.png'); */
   padding: 15px;
   color: ${(props) => props.textColor || '#FFF'};
   cursor: pointer;
@@ -47,7 +47,7 @@ const InfoBox: React.FC<IProps> = (props) => {
   useEffect(() => {
     setTimeout(() => {
       setLoading(false);
-    }, 4000);
+    }, 1000);
   }, [loading]);
   return (
     <>

@@ -81,7 +81,7 @@ const NewRole: React.FC = () => {
       title: 'Confirmar remoção de profissão',
       text: 'A ação não pode ser revertida. Apagar mesmo assim?',
       icon: 'warning',
-      buttons: true,
+      buttons: [true, 'Prosseguir!'],
       dangerMode: true,
     }).then(async (willDelete) => {
       if (willDelete) {

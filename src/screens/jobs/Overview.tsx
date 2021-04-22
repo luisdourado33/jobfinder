@@ -1,10 +1,12 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useContext } from 'react';
 import 'rsuite/dist/styles/rsuite-default.css';
 import api from '../../services/api';
 import { PALETTES } from '../../theme';
 import { IJob } from '../../types';
 import { useParams } from 'react-router-dom';
 import { Container, Header, Content, Message } from 'rsuite';
+
+import { AuthContext } from '../../context/AuthContext';
 
 import Navbar from '../../components/dashboard/Navbar';
 import Jobotron from '../../components/overview/Jobotron';
@@ -15,27 +17,30 @@ type IOverviewProps = {
 };
 
 const Overview: React.FC<IOverviewProps> = ({ title }) => {
+  const { state } = useContext(AuthContext);
   let { jobId } = useParams<any>();
   const [job, setJob] = useState<IJob>();
 
   async function getJob() {
-    await api
-      .get('/jobs/' + jobId)
-      .then((response) => {
-        setJob(response.data[0]);
-        console.log(job);
-        if (job) {
-          window.document.title = `${jobId} - ${job?.title} | Job Finder`;
-        }
-      })
-      .catch((error) => {
-        alert('Houve um erro ao carregar a vaga');
-      });
+    if (jobId) {
+      await api
+        .get('/jobs/' + jobId)
+        .then((response) => {
+          setJob(response.data[0]);
+          console.log(job);
+          if (job) {
+            window.document.title = `${jobId} - ${job?.title} | Job Finder`;
+          }
+        })
+        .catch((error) => {
+          alert('Houve um erro ao carregar a vaga');
+        });
+    }
   }
 
   useEffect(() => {
     getJob();
-  }, []);
+  }, [state, jobId]);
 
   return (
     <div className='show-container'>
@@ -54,7 +59,6 @@ const Overview: React.FC<IOverviewProps> = ({ title }) => {
               title={job.title}
               owner={job.user?.username}
               subtitle={job.description}
-              status={true}
             />
           )}
         </Content>

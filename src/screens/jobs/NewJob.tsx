@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useContext } from 'react';
 import styled from 'styled-components';
 import api from '../../services/api';
 import swal from 'sweetalert';
@@ -24,6 +24,8 @@ import {
   DrawerCloseButton,
   Textarea,
 } from '@chakra-ui/react';
+
+import { AuthContext } from '../../context/AuthContext';
 
 const Container = styled.div`
   /* background-color: ${PALETTES.dark}; */
@@ -119,6 +121,7 @@ const Paragraph = styled.p`
 `;
 
 const FormNewJob: React.FC<{}> = () => {
+  const { state } = useContext(AuthContext);
   const [isLoading, setIsLoading] = useState(false);
   const [users, setUsers] = useState<IUser[]>();
   const { isOpen, onOpen, onClose } = useDisclosure();
@@ -142,7 +145,7 @@ const FormNewJob: React.FC<{}> = () => {
   };
 
   const initialValues: IFormNewJob = {
-    user_id: 0,
+    user_id: state?.userData.id,
     title: '',
     description: '',
     period: '',
@@ -195,13 +198,16 @@ const FormNewJob: React.FC<{}> = () => {
               </FormLabel>
               <Select
                 onChange={(e) => props.setFieldValue('user_id', e.target.value)}
-                placeholder='Selecione sua ocupação'>
-                {users &&
+                placeholder={state.userData.username}>
+                {/* {users &&
                   users.map((user: IUser, key) => (
                     <option key={key} value={user.id}>
                       {user.username}
                     </option>
-                  ))}
+                  ))} */}
+                <option key={state.userData.id} value={state.userData.id}>
+                  {state.userData.username}
+                </option>
               </Select>
             </FormControl>
             <FormControl id='title' isRequired>
