@@ -17,7 +17,7 @@ export interface IUser {
   password?: string;
   passwordRepeat?: string;
   role_id?: number;
-  roles?: object;
+  roles?: any;
   cpf?: string;
   access?: number;
   jobsCreated?: number;

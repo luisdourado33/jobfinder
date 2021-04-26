@@ -29,15 +29,19 @@ const Container = styled.div<IContainerProps>`
   width: auto;
   height: auto;
   background-color: ${(props) => props.bgColor || '#333'};
-  /* background-image: url('https://www.transparenttextures.com/patterns/asfalt-dark.png'); */
+  background-image: url('https://www.transparenttextures.com/patterns/45-degree-fabric-light.png');
   padding: 15px;
   color: ${(props) => props.textColor || '#FFF'};
   cursor: pointer;
   overflow: auto;
   border-radius: 10px;
-  transition: box-shadow 0.4s;
+  transition: all 0.4s;
+
+  border-width: 1px;
+
   :hover {
-    box-shadow: 10px 10px 10px 5px #eee;
+    border-color: ${PALETTES.yellowGold};
+    box-shadow: 1px 5px 5px 0px #eee;
   }
 `;
 
@@ -53,12 +57,13 @@ const InfoBox: React.FC<IProps> = (props) => {
     <>
       <Container bgColor={props.bgColor} textColor={props.textColor}>
         <Stat>
-          <StatLabel>{props.title}</StatLabel>
+          <StatLabel fontWeight='bold'>{props.title}</StatLabel>
           {loading ? (
             <Skeleton color='#FFF' height='27px' width={7} marginBlock={1} />
           ) : (
             <StatNumber>{props.value}</StatNumber>
           )}
+          <hr style={{ marginBlock: 5 }} />
           <StatHelpText>Atualizado em: {dateNow('short')}</StatHelpText>
         </Stat>
         {props.children}

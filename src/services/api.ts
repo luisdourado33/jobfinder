@@ -1,9 +1,9 @@
 import axios from 'axios';
 
-let ipAPI = 'http://localhost:3333';
+let ipAddress = 'http://localhost:3333';
 
 const api = axios.create({
-  baseURL: ipAPI,
+  baseURL: ipAddress,
 });
 
 export default api;

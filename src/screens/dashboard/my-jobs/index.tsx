@@ -12,7 +12,6 @@ import {
   Nav,
   Sidenav,
   Icon,
-  Dropdown,
   Panel,
 } from 'rsuite';
 import {
@@ -63,8 +62,8 @@ const MyJobs: React.FC = () => {
   const [jobs, setJobs] = useState<IJob[]>();
   const [myJobs, setMyJobs] = useState<IJob[]>();
   const [show, setShow] = React.useState(false);
-  const [showJobs, setShowJobs] = useState<boolean>(false);
-  const [showMyJobs, setShowMyJobs] = useState<boolean>(false);
+  const [showJobs, setShowJobs] = useState<boolean>(true);
+  const [showMyJobs, setShowMyJobs] = useState<boolean>(true);
 
   const handleToggle = () => setShow(!show);
 
@@ -191,7 +190,7 @@ const MyJobs: React.FC = () => {
                             <Tooltip
                               label={job.description}
                               aria-label='A tooltip'>
-                              <a href={`jobs/overview/${job.id}`}>
+                              <a href={`jobs/overview/${job.job_id}`}>
                                 <strong>{job.title}</strong>
                               </a>
                             </Tooltip>

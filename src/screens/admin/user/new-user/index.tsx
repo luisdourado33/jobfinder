@@ -146,16 +146,7 @@ const NewUser: React.FC = () => {
   return (
     <div className='sidebar-page'>
       <Container>
-        <Sidebar
-          style={{ display: 'flex', flexDirection: 'column', height: '100%' }}
-          collapsible>
-          <Sidenav.Header>
-            <div style={headerStyles}>
-              <b>Painel Administrativo</b>
-            </div>
-          </Sidenav.Header>
-          <Navbar />
-        </Sidebar>
+        <Navbar />
         <Container>
           <Header style={{ padding: 20 }}>
             <Heading size={'lg'} isTruncated>
@@ -206,7 +197,7 @@ const NewUser: React.FC = () => {
                                 <b>{user.email}</b>
                               </Td>
                               <Td>
-                                <b>{user.role_id}</b>
+                                <b>{user.roles && user.roles.name}</b>
                               </Td>
                               <Td>
                                 <b>{user.jobsCreated}</b>
