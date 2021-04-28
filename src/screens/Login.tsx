@@ -118,6 +118,7 @@ const FormLogin: React.FC<{}> = () => {
   const { state, setState } = useContext(AuthContext);
   const [isLoading, setIsLoading] = useState(false);
   const [roles, setRoles] = useState<Role[]>();
+  // const [curriculum, setCurriculum] = useState<any>();
   const { isOpen, onOpen, onClose } = useDisclosure();
 
   async function getRoles() {
@@ -134,6 +135,7 @@ const FormLogin: React.FC<{}> = () => {
     role_id: 0,
     cpf: '',
     birthDate: null,
+    curriculum: '',
   };
 
   const initialValues: IFormValues = {
@@ -205,6 +207,27 @@ const FormLogin: React.FC<{}> = () => {
         cpf: formFields.cpf,
       })
       .then((success) => {
+        (async () => {
+          var formData = new FormData();
+          formData.append(
+            'curriculum',
+            formFields.curriculum ? formFields.curriculum : ''
+          );
+          await api
+            .post(`upload/${success.data.id}`, formData, {
+              headers: {
+                'Content-Type': 'multipart/form-data',
+              },
+            })
+            .then((response) => {
+              alert(response.data.msg);
+            })
+            .catch((error) => {
+              console.log(error);
+              alert('Houve um erro ao fazer upload do arquivo.\n' + error);
+            });
+        })();
+
         swal({
           title: 'Conta criada!',
           text: `Seja bem-vind@, ${formFields.username}`,
@@ -333,6 +356,21 @@ const FormLogin: React.FC<{}> = () => {
                         variant='flushed'
                         placeholder='Somente números'
                       />
+                      <FormControl marginBlock={5} id='curriculum' isRequired>
+                        <input
+                          type='file'
+                          name='curriculum'
+                          id='curriculum'
+                          onChange={(event) => {
+                            props.setFieldValue(
+                              'curriculum',
+                              event.currentTarget.files
+                                ? event.currentTarget.files[0]
+                                : null
+                            );
+                          }}
+                        />
+                      </FormControl>
                     </FormControl>
 
                     <DrawerFooter>

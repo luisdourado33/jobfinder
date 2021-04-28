@@ -24,6 +24,7 @@ export interface IUser {
   jobsSigned?: number;
   birthDate?: Date | null | string;
   status?: boolean;
+  curriculum?: string | Blob;
 }
 
 export type Role = {

@@ -5,7 +5,19 @@ import { PALETTES } from '../../theme';
 import { IJob } from '../../types';
 import { Message } from 'rsuite';
 import { FaClipboardCheck } from 'react-icons/fa';
-import { InputGroup, Button, Badge } from '@chakra-ui/react';
+import {
+  InputGroup,
+  Button,
+  Badge,
+  Table,
+  TableCaption,
+  Thead,
+  Tr,
+  Th,
+  Tbody,
+  Td,
+  Tfoot,
+} from '@chakra-ui/react';
 import { ToastContainer, toast } from 'react-toastify';
 
 import { AuthContext } from '../../context/AuthContext';
@@ -18,6 +30,7 @@ interface IJobotronProps {
   owner?: string;
   period: string;
   isRemote?: boolean;
+  isOwner?: boolean;
   status?: boolean;
 }
 
@@ -64,6 +77,7 @@ const Jobotron: React.FC<IJobotronProps> = (props) => {
   const { state } = useContext(AuthContext);
   const [jobsSigned, setJobsSigned] = useState<IJob>();
   const [alreadySigned, setAlreadySigned] = useState<boolean>(false);
+  const [applies, setApplies] = useState<any>();
 
   async function applyJob(user_id: any, job_id: any) {
     await api
@@ -96,6 +110,17 @@ const Jobotron: React.FC<IJobotronProps> = (props) => {
       });
   }
 
+  async function getJobApplies() {
+    await api
+      .get(`jobsApplies/filter/${props.jobId}`)
+      .then((response) => {
+        setApplies(response.data);
+      })
+      .catch((error) => {
+        console.log('Houve um erro ao carregar as candidaturas.\n' + error);
+      });
+  }
+
   useEffect(() => {
     (async () => {
       await api
@@ -103,10 +128,8 @@ const Jobotron: React.FC<IJobotronProps> = (props) => {
         .then((res) => {
           res.data.map((jobLoop: IJob) => {
             if (jobLoop.job_id == props.jobId) {
-              // alert('Já inscrito: ' + jobLoop.id);
+              getJobApplies();
               setAlreadySigned(true);
-            } else {
-              // alert(jobLoop.job_id);
             }
           });
         })
@@ -212,9 +235,61 @@ const Jobotron: React.FC<IJobotronProps> = (props) => {
             )}
           </InputGroup>
         </div>
-        <div style={{ flex: 'content', display: 'flex' }}>
-          <img width={1000} src='../../images/bg.jpg' />
-        </div>
+        {!props.isOwner ? (
+          <div style={{ flex: 'content', display: 'flex' }}>
+            <img width={1000} src='../../images/bg.jpg' />
+          </div>
+        ) : (
+          <div
+            style={{
+              width: '50%',
+              backgroundColor: '#FFF',
+              flex: 'content',
+              display: 'flex',
+              padding: 100,
+              flexDirection: 'column',
+              alignItems: 'baseline',
+            }}>
+            <h1>{applies?.length > 0 ? applies.length : 0} Candidatura(s)</h1>
+            <Table variant='striped' colorScheme='cyan'>
+              <Thead>
+                <Tr>
+                  <Th>Nome</Th>
+                  <Th>E-mail</Th>
+                  <Th>Currículo</Th>
+                  <Th>Aprovar</Th>
+                </Tr>
+              </Thead>
+              <Tbody>
+                {applies?.map((apply: any) => (
+                  <Tr>
+                    <Td>{apply.user?.username}</Td>
+                    <Td>{apply.user?.email}</Td>
+                    <Td>
+                      <Button
+                        onClick={() =>
+                          window.open(
+                            'http://localhost:3333/download/' + apply.user?.id,
+                            'newwindow',
+                            'width=1000,height=1000'
+                          )
+                        }
+                        size='xs'
+                        colorScheme='purple'>
+                        Visualizar
+                      </Button>
+                    </Td>
+                    <Td>
+                      <Button size='xs' colorScheme='green'>
+                        Aprovar candidatura
+                      </Button>
+                    </Td>
+                  </Tr>
+                ))}
+              </Tbody>
+            </Table>
+          </div>
+        )}
       </JumbotronSeparator>
       <ToastContainer
         position='top-right'

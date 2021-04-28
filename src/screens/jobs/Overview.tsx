@@ -19,6 +19,7 @@ type IOverviewProps = {
 const Overview: React.FC<IOverviewProps> = ({ title }) => {
   const { state } = useContext(AuthContext);
   let { jobId } = useParams<any>();
+  const [isOwner, setIsOwner] = useState<boolean>();
   const [job, setJob] = useState<IJob>();
 
   async function getJob() {
@@ -30,6 +31,13 @@ const Overview: React.FC<IOverviewProps> = ({ title }) => {
           console.log(job);
           if (job) {
             window.document.title = `${jobId} - ${job?.title} | Job Finder`;
+
+            let ownerId = response.data[0].user_id;
+            if (ownerId == state.userData.id) {
+              setIsOwner(true);
+            }
+            // Checar se o JOB pertence ao usuário autenticado
+            // alert(`Seu ID: ${state.userData.id}\nDono do JOB: ${job.user_id}`);
           }
         })
         .catch((error) => {
@@ -58,6 +66,7 @@ const Overview: React.FC<IOverviewProps> = ({ title }) => {
               isRemote={true}
               title={job.title}
               owner={job.user?.username}
+              isOwner={isOwner && isOwner}
               subtitle={job.description}
             />
           )}
