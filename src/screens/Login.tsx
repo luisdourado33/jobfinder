@@ -219,9 +219,7 @@ const FormLogin: React.FC<{}> = () => {
                 'Content-Type': 'multipart/form-data',
               },
             })
-            .then((response) => {
-              alert(response.data.msg);
-            })
+            .then((response) => {})
             .catch((error) => {
               console.log(error);
               alert('Houve um erro ao fazer upload do arquivo.\n' + error);

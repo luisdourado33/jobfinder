@@ -216,22 +216,30 @@ const Jobotron: React.FC<IJobotronProps> = (props) => {
 
           <InputGroup mt={10}>
             {!alreadySigned ? (
-              <Button
-                onClick={() => applyJob(state?.userData.id, props.jobId)}
-                colorScheme='green'
-                leftIcon={<FaClipboardCheck />}
-                ml={1}>
-                Quero me candidatar a vaga
-              </Button>
+              <>
+                {!props.isOwner && (
+                  <Button
+                    onClick={() => applyJob(state?.userData.id, props.jobId)}
+                    colorScheme='green'
+                    leftIcon={<FaClipboardCheck />}
+                    ml={1}>
+                    Quero me candidatar a vaga
+                  </Button>
+                )}
+              </>
             ) : (
-              <Button
-                disabled
-                onClick={() => applyJob(state?.userData.id, props.jobId)}
-                colorScheme='green'
-                leftIcon={<FaClipboardCheck />}
-                ml={1}>
-                Você já está inscrito nesta vaga.
-              </Button>
+              <>
+                {!props.isOwner && (
+                  <Button
+                    disabled
+                    onClick={() => applyJob(state?.userData.id, props.jobId)}
+                    colorScheme='green'
+                    leftIcon={<FaClipboardCheck />}
+                    ml={1}>
+                    Você já está inscrito nesta vaga.
+                  </Button>
+                )}
+              </>
             )}
           </InputGroup>
         </div>
