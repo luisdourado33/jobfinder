@@ -40,18 +40,23 @@ const Navbar: React.FC = () => {
                 Dashboard
               </Nav.Item>
             </Link>
-            <Link to='/admin/new-user'>
+            <Link to='/admin/new-job'>
               <Nav.Item eventKey='2' icon={<Icon icon='group' />}>
+                Vagas
+              </Nav.Item>
+            </Link>
+            <Link to='/admin/new-user'>
+              <Nav.Item eventKey='3' icon={<Icon icon='group' />}>
                 Usuários
               </Nav.Item>
             </Link>
             <Link to='/admin/new-role'>
-              <Nav.Item eventKey='3' icon={<Icon icon='group' />}>
+              <Nav.Item eventKey='4' icon={<Icon icon='group' />}>
                 Profissões
               </Nav.Item>
             </Link>
             <Link to='/admin/new-company'>
-              <Nav.Item eventKey='4' icon={<Icon icon='group' />}>
+              <Nav.Item eventKey='5' icon={<Icon icon='group' />}>
                 Categorias
               </Nav.Item>
             </Link>

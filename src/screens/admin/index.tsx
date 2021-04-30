@@ -3,17 +3,7 @@ import { BrowserRouter as Router, Route } from 'react-router-dom';
 import { headerStyles, PALETTES } from '../../theme';
 import { Heading } from '@chakra-ui/react';
 import { SimpleGrid } from '@chakra-ui/react';
-import {
-  Container,
-  Header,
-  Sidebar,
-  Sidenav,
-  Content,
-  Dropdown,
-  Nav,
-  Icon,
-  Panel,
-} from 'rsuite';
+import { Container, Header, Content, Panel } from 'rsuite';
 
 import api from '../../services/api';
 
@@ -21,6 +11,8 @@ import Navbar from '../../components/admin/Navbar';
 import NewRole from '../../screens/admin/role/new-role';
 import NewCompany from '../../screens/admin/company/new-company';
 import NewUser from '../../screens/admin/user/new-user';
+import NewJob from '../../screens/admin/job/new-job';
+
 import NotAuthorized from '../../components/NotAuthorized';
 import InfoBox from '../../components/InfoBox';
 
@@ -162,6 +154,7 @@ const AdminRouter: React.FC = () => {
       <Route path='/admin/new-role' component={NewRole} />
       <Route path='/admin/new-company' component={NewCompany} />
       <Route path='/admin/new-user' component={NewUser} />
+      <Route path='/admin/new-job' component={NewJob} />
     </Router>
   );
 };
